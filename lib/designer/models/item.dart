@@ -67,12 +67,12 @@ class Item {
     return Item(
         id: (map['id'] ?? ""),
         point: Point(
-          (pointMap['x'] ?? -1) as double,
-          (pointMap['y'] ?? -1) as double,
+          (pointMap['x'] ?? -1) + 0.0,
+          (pointMap['y'] ?? -1) + 0.0,
         ),
         size: Size(
-          (sizeMap['width'] ?? -1) as double,
-          (sizeMap['height'] ?? -1) as double,
+          (sizeMap['width'] ?? -1) + 0.0,
+          (sizeMap['height'] ?? -1) + 0.0,
         ),
         color: Color((map['color'] ?? 4294961979) as int),
         selected: map['selected'] == 'true');
