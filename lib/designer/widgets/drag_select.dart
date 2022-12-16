@@ -33,6 +33,7 @@ class DragSelect extends ConsumerWidget {
           onSelect(Point(start.dx, start.dy));
         },
         onHorizontalDragUpdate: (details) {
+          // print(details.delta);
           final end = details.localPosition;
           onDrag(Point(end.dx, end.dy));
         },

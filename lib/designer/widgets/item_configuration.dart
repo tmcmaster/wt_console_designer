@@ -31,7 +31,7 @@ class ItemConfiguration extends ConsumerWidget {
                           style: ButtonStyle(backgroundColor: MaterialStateProperty.all(color)),
                           child: Container(),
                           onPressed: () {
-                            print(color);
+                            // print(color);
                             notifier.updateItem(selected.first.copyWith(color: color));
                           },
                         ),

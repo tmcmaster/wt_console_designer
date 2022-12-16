@@ -35,6 +35,8 @@ class ComponentPalette extends ConsumerWidget {
                         notifier.create(
                           point: const Point(50.0, 50.0),
                           size: size,
+                          aspect: size.height < 75 ? size.width / size.height : null,
+                          resize: size.height < 75,
                         );
                       },
                     ),

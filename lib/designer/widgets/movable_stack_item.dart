@@ -85,7 +85,7 @@ class _MovableStackItemState extends State<MovableStackItem> {
           },
           onPanStart: (details) {
             setState(() {
-              if (inCorner(details.localPosition)) {
+              if (inCorner(details.localPosition) && widget.item.resize) {
                 resizing = true;
               } else {
                 moving = true;
@@ -100,8 +100,19 @@ class _MovableStackItemState extends State<MovableStackItem> {
           },
           child: Container(
             decoration: BoxDecoration(
-              border: widget.item.selected ? Border.all(color: Colors.blueAccent) : null,
+              border: widget.item.selected
+                  ? Border.all(color: Colors.black, width: 2)
+                  : Border.all(color: Colors.grey, width: 1),
               color: widget.item.color,
+              boxShadow: [
+                if (moving)
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+              ],
             ),
             width: width,
             height: height,

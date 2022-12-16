@@ -7,6 +7,9 @@ class Item {
   final Size size;
   final Color color;
   final bool selected;
+  final bool highlighted;
+  final double? aspect;
+  final bool resize;
 
   Item({
     required this.id,
@@ -14,6 +17,9 @@ class Item {
     required this.size,
     required this.color,
     required this.selected,
+    required this.highlighted,
+    this.aspect,
+    this.resize = true,
   });
 
   Item copyWith({
@@ -22,6 +28,9 @@ class Item {
     Size? size,
     Color? color,
     bool? selected,
+    bool? highlighted,
+    double? aspect,
+    bool? resize,
   }) {
     return Item(
       id: id ?? this.id,
@@ -29,6 +38,9 @@ class Item {
       size: size ?? this.size,
       color: color ?? this.color,
       selected: selected ?? this.selected,
+      highlighted: highlighted ?? this.highlighted,
+      aspect: aspect ?? this.aspect,
+      resize: resize ?? this.resize,
     );
   }
 
@@ -65,16 +77,20 @@ class Item {
     final sizeMap = (map['size'] ?? {}) as Map<String, dynamic>;
 
     return Item(
-        id: (map['id'] ?? ""),
-        point: Point(
-          (pointMap['x'] ?? -1) + 0.0,
-          (pointMap['y'] ?? -1) + 0.0,
-        ),
-        size: Size(
-          (sizeMap['width'] ?? -1) + 0.0,
-          (sizeMap['height'] ?? -1) + 0.0,
-        ),
-        color: Color((map['color'] ?? 4294961979) as int),
-        selected: map['selected'] == 'true');
+      id: (map['id'] ?? ""),
+      point: Point(
+        (pointMap['x'] ?? -1) + 0.0,
+        (pointMap['y'] ?? -1) + 0.0,
+      ),
+      size: Size(
+        (sizeMap['width'] ?? -1) + 0.0,
+        (sizeMap['height'] ?? -1) + 0.0,
+      ),
+      color: Color((map['color'] ?? 4294961979) as int),
+      selected: map['selected'] == 'true',
+      highlighted: map['highlighted'] == 'true',
+      aspect: map['aspect'] == null ? null : (map['aspect'] + 1.0),
+      resize: map['resize'] == 'true',
+    );
   }
 }

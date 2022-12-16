@@ -12,6 +12,16 @@ final itemCountProvider = Provider((ref) => ref.watch(itemListProvider).length);
 final selectedItems = Provider<List<Item>>(
     (ref) => ref.watch(itemListProvider).where((item) => item.selected).toList());
 
+final itemProvider = Provider.autoDispose.family<Item?, String>(
+  (ref, id) {
+    final options = ref.watch(itemListProvider).where((item) => item.id == id);
+
+    return options.isEmpty
+        ? null
+        : ref.watch(itemListProvider).where((item) => item.id == id).first;
+  },
+);
+
 final itemListProvider = StateNotifierProvider<ItemListNotifier, List<Item>>(
   (ref) => ItemListNotifier(ref),
 );
@@ -29,6 +39,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
             size: const Size(100, 100),
             color: Colors.yellow,
             selected: false,
+            highlighted: false,
           ),
           Item(
             id: "002",
@@ -36,6 +47,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
             size: const Size(100, 100),
             color: Colors.yellow,
             selected: false,
+            highlighted: false,
           ),
         ]);
 
@@ -44,6 +56,9 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     Size? size,
     Color? color,
     bool? selected,
+    bool? highlighted,
+    double? aspect,
+    bool? resize,
   }) {
     final id = uuid.v1();
     state = [
@@ -54,6 +69,9 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
         size: size ?? const Size(100, 100),
         color: color ?? Colors.yellow,
         selected: selected ?? false,
+        highlighted: highlighted ?? false,
+        aspect: aspect,
+        resize: resize ?? true,
       )
     ];
   }
