@@ -83,6 +83,11 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     ];
   }
 
+  void updateItems(List<Item> items) {
+    final itemMap = <String, Item>{for (var item in items) item.id: item};
+    state = state.map((e) => itemMap[e.id] == null ? e : (itemMap[e.id] ?? e)).toList();
+  }
+
   void updateItem(Item newItem) {
     state = [...state.where((item) => item.id != newItem.id).toList(), newItem];
   }
