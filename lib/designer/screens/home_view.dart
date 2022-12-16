@@ -69,12 +69,18 @@ class HomeScreen extends ConsumerWidget {
         ],
       ),
       body: Column(
-        children: const [
-          ComponentPalette(),
+        children: [
           Expanded(
-            child: DesignerStack(),
+            child: Row(
+              children: const [
+                ComponentPalette(),
+                Expanded(
+                  child: DesignerStack(),
+                ),
+              ],
+            ),
           ),
-          ItemConfiguration(),
+          const ItemConfiguration(),
         ],
       ),
     );

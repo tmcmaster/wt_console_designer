@@ -7,6 +7,8 @@ import 'package:wt_console_designer/designer/widgets/drag_select.dart';
 import 'package:wt_console_designer/designer/widgets/draggable_item_widget.dart';
 import 'package:wt_console_designer/designer/widgets/selection_box.dart';
 
+final stackKey = GlobalKey();
+
 class DesignerStack extends ConsumerWidget {
   const DesignerStack({Key? key}) : super(key: key);
 
@@ -28,6 +30,7 @@ class DesignerStack extends ConsumerWidget {
           moveResizeNotifier.unselect();
         },
         child: Stack(
+          key: stackKey,
           children: [
             DragSelect(
               constraints: constraints,
@@ -48,14 +51,6 @@ class DesignerStack extends ConsumerWidget {
                       id: item.id,
                     ))
                 .toList(),
-            // ...itemList
-            //     .map((item) => MovableStackItem(
-            //           key: ValueKey(item.id),
-            //           item: item,
-            //           constraints: constraints,
-            //         ))
-            //     .toList(),
-            // const DraggableItemWidget(id: '001'),
           ],
         ),
       );
