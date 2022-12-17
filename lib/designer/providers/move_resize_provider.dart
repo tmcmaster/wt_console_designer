@@ -72,10 +72,11 @@ class MoveResizeNotifier extends StateNotifier<Item?> {
   }
 
   bool _isWithinConstraints(BoxConstraints constraints, Point point, Size size) {
-    return point.x > 0 &&
-        (point.x + size.width) < constraints.maxWidth &&
-        point.y > 0 &&
-        (point.y + size.height) < constraints.maxHeight;
+    return point.x > 0 && point.y > 0;
+    // return point.x > 0 &&
+    //     (point.x + size.width) < constraints.maxWidth &&
+    //     point.y > 0 &&
+    //     (point.y + size.height) < constraints.maxHeight;
   }
 }
 

@@ -10,7 +10,9 @@ import 'package:wt_console_designer/designer/widgets/selection_box.dart';
 final stackKey = GlobalKey();
 
 class DesignerStack extends ConsumerWidget {
-  const DesignerStack({Key? key}) : super(key: key);
+  DesignerStack({Key? key}) : super(key: key);
+
+  bool panMode = true;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +25,7 @@ class DesignerStack extends ConsumerWidget {
     return LayoutBuilder(builder: (_, constraints) {
       return GestureDetector(
         onPanUpdate: (details) {
-          // print(details.localPosition);
+          print(details.localPosition);
           moveResizeNotifier.update(details, constraints);
         },
         onPanEnd: (details) {
@@ -45,6 +47,7 @@ class DesignerStack extends ConsumerWidget {
             ),
             DragSelect(
               constraints: constraints,
+              onPan: () {},
               onSelect: (point) {
                 selectionNotifier.start(point);
               },

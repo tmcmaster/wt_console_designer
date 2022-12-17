@@ -13,10 +13,14 @@ class HomeScreen extends StatelessWidget {
           const HeaderToolBar(),
           Expanded(
             child: Row(
-              children: const [
-                ComponentPalette(),
+              children: [
+                const ComponentPalette(),
                 Expanded(
-                  child: DesignerStack(),
+                  child: Stack(
+                    children: [
+                      DesignerStack(),
+                    ],
+                  ),
                 ),
               ],
             ),

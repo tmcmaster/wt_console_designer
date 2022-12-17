@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 
 class DragSelect extends ConsumerWidget {
+  final void Function() onPan;
   final void Function(Point) onSelect;
   final void Function(Point) onDrag;
   final void Function() onComplete;
@@ -13,6 +14,7 @@ class DragSelect extends ConsumerWidget {
 
   const DragSelect({
     super.key,
+    required this.onPan,
     required this.onSelect,
     required this.constraints,
     required this.onDrag,
@@ -28,12 +30,16 @@ class DragSelect extends ConsumerWidget {
       height: constraints.maxWidth,
       child: GestureDetector(
         dragStartBehavior: DragStartBehavior.down,
+        onLongPress: () {
+          onPan();
+        },
         onHorizontalDragStart: (details) {
+          print('== onHorizontalDragStart == ${details.localPosition}');
           final start = details.localPosition;
           onSelect(Point(start.dx, start.dy));
         },
         onHorizontalDragUpdate: (details) {
-          // print(details.delta);
+          // print('== onHorizontalDragUpdate == ${details.localPosition}');
           final end = details.localPosition;
           onDrag(Point(end.dx, end.dy));
         },
