@@ -27,7 +27,15 @@ class ItemCreationPalette extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 75,
-      color: Colors.grey.shade100,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        border: Border(
+          right: BorderSide(
+            width: 2,
+            color: Colors.grey.shade300,
+          ),
+        ),
+      ),
       padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

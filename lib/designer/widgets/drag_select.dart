@@ -43,6 +43,10 @@ class DragSelect extends ConsumerWidget {
         onTap: () {
           notifier.clearSelection();
         },
+        // child: Container(
+        //   width: double.infinity,
+        //   height: double.infinity,
+        // ),
       ),
     );
   }

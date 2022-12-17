@@ -32,6 +32,17 @@ class DesignerStack extends ConsumerWidget {
         child: Stack(
           key: stackKey,
           children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage('assets/paper-texture.png'),
+                  // repeat: ImageRepeat.repeat,
+                ),
+              ),
+            ),
             DragSelect(
               constraints: constraints,
               onSelect: (point) {
@@ -44,13 +55,13 @@ class DesignerStack extends ConsumerWidget {
                 selectionNotifier.end();
               },
             ),
-            const SelectionBox(),
             ...itemList
                 .map((item) => DraggableItemWidget(
                       key: ValueKey(item.id),
                       id: item.id,
                     ))
                 .toList(),
+            const SelectionBox(),
           ],
         ),
       );

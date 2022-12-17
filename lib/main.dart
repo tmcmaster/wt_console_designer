@@ -21,7 +21,7 @@ class ConsoleDesignerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: _testParabeacThemes
           ? FlutterThemesTheme.themeDataLight
