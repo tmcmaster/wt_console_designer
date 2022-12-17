@@ -6,6 +6,7 @@ import 'package:flutter/src/rendering/box.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
+import 'package:wt_console_designer/scroll_pane/scroll_pane_providers.dart';
 
 final moveResizeProvider = StateNotifierProvider<MoveResizeNotifier, Item?>(
   (ref) => MoveResizeNotifier(ref),
@@ -54,6 +55,27 @@ class MoveResizeNotifier extends StateNotifier<Item?> {
         }
       }
       ref.read(itemListProvider.notifier).updateItem(state!);
+    }
+  }
+
+  void resizeCanvasIfRequired() {
+    if (state != null) {
+      final size = ref.read(scrollPaneStateProvider).size;
+
+      if ((state!.point.x + state!.size.width) > size.width ||
+          (state!.point.y + state!.size.height) > size.height) {
+        final newSize = Size(
+          (state!.point.x + state!.size.width) > size.width
+              ? state!.point.x + state!.size.width
+              : size.width + 200,
+          (state!.point.y + state!.size.height) > size.height
+              ? state!.point.y + state!.size.height
+              : size.height + 100,
+        );
+        ref.read(scrollPaneStateProvider.notifier).update(
+              size: newSize,
+            );
+      }
     }
   }
 

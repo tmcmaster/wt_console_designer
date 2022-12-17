@@ -25,23 +25,25 @@ class DesignerStack extends ConsumerWidget {
     return LayoutBuilder(builder: (_, constraints) {
       return GestureDetector(
         onPanUpdate: (details) {
-          print(details.localPosition);
           moveResizeNotifier.update(details, constraints);
         },
         onPanEnd: (details) {
+          moveResizeNotifier.resizeCanvasIfRequired();
           moveResizeNotifier.unselect();
         },
         child: Stack(
           key: stackKey,
           children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage('assets/paper-texture.png'),
-                  // repeat: ImageRepeat.repeat,
+            IgnorePointer(
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/paper-texture.png'),
+                    // repeat: ImageRepeat.repeat,
+                  ),
                 ),
               ),
             ),

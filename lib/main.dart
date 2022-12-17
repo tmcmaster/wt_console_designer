@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wt_console_designer/designer/screens/scroll_pane_view.dart';
+import 'package:wt_console_designer/designer/screens/home_view.dart';
 import 'package:wt_console_designer/theme/flutter_themes_theme.g.dart';
 
 void main() async {
@@ -29,8 +29,8 @@ class ConsoleDesignerApp extends StatelessWidget {
               primarySwatch: Colors.amber,
             ),
       darkTheme: _testParabeacThemes ? FlutterThemesTheme.themeDataDark : ThemeData.dark(),
-      // home: HomeScreen(),
-      home: const ScrollPaneView(),
+      home: HomeScreen(),
+      // home: const ScrollPaneView(),
     );
   }
 }

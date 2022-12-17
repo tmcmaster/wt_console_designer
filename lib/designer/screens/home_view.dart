@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/widgets/component_palette.dart';
 import 'package:wt_console_designer/designer/widgets/designer_stack.dart';
+import 'package:wt_console_designer/scroll_pane/scroll_pane.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -16,10 +17,8 @@ class HomeScreen extends StatelessWidget {
               children: [
                 const ComponentPalette(),
                 Expanded(
-                  child: Stack(
-                    children: [
-                      DesignerStack(),
-                    ],
+                  child: ScrollPane(
+                    child: DesignerStack(),
                   ),
                 ),
               ],

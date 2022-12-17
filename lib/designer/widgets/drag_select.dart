@@ -4,8 +4,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
+import 'package:wt_console_designer/designer/providers/selection_provider.dart';
 
-class DragSelect extends ConsumerWidget {
+class DragSelect extends ConsumerStatefulWidget {
   final void Function() onPan;
   final void Function(Point) onSelect;
   final void Function(Point) onDrag;
@@ -22,30 +23,74 @@ class DragSelect extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DragSelect> createState() => _DragSelectState();
+}
+
+class _DragSelectState extends ConsumerState<DragSelect> {
+  bool selecting = false;
+
+  @override
+  Widget build(BuildContext context) {
     final notifier = ref.read(itemListProvider.notifier);
+    final selectionNotifier = ref.read(selectionProvider.notifier);
 
     return Positioned(
-      width: constraints.maxWidth,
-      height: constraints.maxWidth,
+      width: widget.constraints.maxWidth,
+      height: widget.constraints.maxWidth,
       child: GestureDetector(
         dragStartBehavior: DragStartBehavior.down,
-        onLongPress: () {
-          onPan();
+        onDoubleTap: () {
+          // This is required for the onDoubleTapDown to work
         },
-        onHorizontalDragStart: (details) {
-          print('== onHorizontalDragStart == ${details.localPosition}');
-          final start = details.localPosition;
-          onSelect(Point(start.dx, start.dy));
+        onDoubleTapDown: (details) {
+          setState(() {
+            selecting = true;
+            selectionNotifier.start(Point(
+              details.localPosition.dx,
+              details.localPosition.dy,
+            ));
+          });
         },
-        onHorizontalDragUpdate: (details) {
-          // print('== onHorizontalDragUpdate == ${details.localPosition}');
-          final end = details.localPosition;
-          onDrag(Point(end.dx, end.dy));
-        },
-        onHorizontalDragEnd: (details) {
-          onComplete();
-        },
+        onPanStart: selecting
+            ? (details) {
+                selectionNotifier.start(Point(
+                  details.localPosition.dx,
+                  details.localPosition.dy,
+                ));
+              }
+            : null,
+        onPanUpdate: selecting
+            ? (details) {
+                selectionNotifier.drag(Point(
+                  details.localPosition.dx,
+                  details.localPosition.dy,
+                ));
+              }
+            : null,
+        onPanEnd: selecting
+            ? (details) {
+                setState(() {
+                  selectionNotifier.end();
+                  selecting = false;
+                });
+              }
+            : null,
+        // onPanUpdate: (details) {
+        //   print(details.localPosition);
+        // },
+        // onHorizontalDragStart: (details) {
+        //   print('== onHorizontalDragStart == ${details.localPosition}');
+        //   final start = details.localPosition;
+        //   onSelect(Point(start.dx, start.dy));
+        // },
+        // onHorizontalDragUpdate: (details) {
+        //   // print('== onHorizontalDragUpdate == ${details.localPosition}');
+        //   final end = details.localPosition;
+        //   widget.onDrag(Point(end.dx, end.dy));
+        // },
+        // onHorizontalDragEnd: (details) {
+        //   onComplete();
+        // },
         onTap: () {
           notifier.clearSelection();
         },
