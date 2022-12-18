@@ -16,6 +16,7 @@ class DraggableItemWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // print('DraggableItemWidget($id).build');
+
     final item = ref.watch(itemProvider(id));
     final moveResizeNotifier = ref.read(moveResizeProvider.notifier);
     final itemListNotifier = ref.read(itemListProvider.notifier);

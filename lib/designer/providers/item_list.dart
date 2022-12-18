@@ -208,10 +208,10 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
       return;
     }
     final firstItem = items[0];
-    final requiredCenter = getValue(firstItem);
+    final requiredValue = getValue(firstItem);
     final updatedItems = items.sublist(1).map((item) {
-      final center = getValue(item);
-      final offset = requiredCenter - center;
+      final value = getValue(item);
+      final offset = requiredValue - value;
       // print('RequiredCenter($requiredCenter), Center($center), Delta($offset)');
       return item.copyWith(
         point: Point(
@@ -228,5 +228,17 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     Future.delayed(const Duration(milliseconds: 50), () {
       add(selectedItem);
     });
+  }
+
+  void moveSelected(String id, Offset delta) {
+    state = state
+        .map((item) => item.id == id || !item.selected
+            ? item
+            : item.copyWith(
+                point: Point(
+                item.point.x + delta.dx,
+                item.point.y + delta.dy,
+              )))
+        .toList();
   }
 }

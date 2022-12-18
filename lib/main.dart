@@ -23,14 +23,13 @@ class ConsoleDesignerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: ThemeData(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        hoverColor: Colors.transparent,
+        primarySwatch: Colors.blue,
       ),
+      darkTheme: ThemeData.dark(),
       // theme: _testParabeacThemes
       //     ? FlutterThemesTheme.themeDataLight
       //     : ThemeData(
-      //         primarySwatch: Colors.amber,
+      //         primarySwatch: Colors.blue,
       //       ),
       // darkTheme: _testParabeacThemes ? FlutterThemesTheme.themeDataDark : ThemeData.dark(),
       home: HomeScreen(),

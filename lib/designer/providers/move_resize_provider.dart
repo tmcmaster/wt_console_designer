@@ -38,6 +38,11 @@ class MoveResizeNotifier extends StateNotifier<Item?> {
             point: newPoint,
             highlighted: true,
           );
+
+          if (state!.selected) {
+            // move any other selected items
+            ref.read(itemListProvider.notifier).moveSelected(state!.id, details.delta);
+          }
         }
       } else {
         final newSize = Size(
