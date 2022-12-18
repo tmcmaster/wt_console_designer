@@ -47,7 +47,10 @@ class _PaletteIconState extends State<PaletteIcon> {
                   hovering = state;
                 });
               },
-              child: Icon(widget.icon),
+              child: Icon(
+                widget.icon,
+                color: Colors.grey.shade600,
+              ),
             ),
           ),
           const SizedBox(
