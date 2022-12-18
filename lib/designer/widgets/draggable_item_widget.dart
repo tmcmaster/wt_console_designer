@@ -26,6 +26,10 @@ class DraggableItemWidget extends ConsumerWidget {
             left: item.point.x.toDouble(),
             top: item.point.y.toDouble(),
             child: GestureDetector(
+              onDoubleTap: () {
+                // print('Bring to front ${item.id}');
+                itemListNotifier.bringToFront(item);
+              },
               onTapDown: (details) {
                 // print('Selected Item: ${item.id}');
                 moveResizeNotifier.select(item, details);

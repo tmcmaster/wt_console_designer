@@ -220,4 +220,11 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     }).toList();
     updateItems(updatedItems);
   }
+
+  void bringToFront(Item selectedItem) {
+    state = state.where((item) => item.id != selectedItem.id).toList();
+    Future.delayed(const Duration(milliseconds: 50), () {
+      add(selectedItem);
+    });
+  }
 }
