@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/models/palette_item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
@@ -42,19 +43,23 @@ class ItemCreationPalette extends StatelessWidget {
         children: [
           ...[
             const PaletteItem(
-              icon: Icons.abc,
+              label: 'Note',
+              icon: Icons.note,
               size: Size(50.0, 50.0),
             ),
             const PaletteItem(
-              icon: Icons.fire_truck,
+              label: 'Link',
+              icon: Icons.link,
               size: Size(100.0, 50.0),
             ),
             const PaletteItem(
-              icon: Icons.apartment,
+              label: 'To-do',
+              icon: FontAwesomeIcons.listCheck,
               size: Size(50.0, 75.0),
             ),
             const PaletteItem(
-              icon: Icons.access_alarm,
+              label: 'Note',
+              icon: FontAwesomeIcons.line,
               size: Size(300.0, 75.0),
             ),
           ]
@@ -62,6 +67,7 @@ class ItemCreationPalette extends StatelessWidget {
                 (item) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TemplateItem(
+                      label: item.label,
                       icon: item.icon,
                       item: Item(
                         id: '',

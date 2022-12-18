@@ -5,15 +5,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/widgets/designer_stack.dart';
+import 'package:wt_console_designer/designer/widgets/palette_icon.dart';
 
 class TemplateItem extends ConsumerWidget {
   final IconData icon;
+  final String label;
   final Item item;
 
   const TemplateItem({
     Key? key,
     required this.item,
     required this.icon,
+    required this.label,
   }) : super(key: key);
 
   @override
@@ -36,11 +39,11 @@ class TemplateItem extends ConsumerWidget {
         width: item.size.width,
         height: item.size.height,
       ),
-      childWhenDragging: Icon(
-        icon,
-        color: Colors.grey,
+      childWhenDragging: Opacity(
+        opacity: 0.3,
+        child: PaletteIcon(icon: icon, label: label),
       ),
-      child: Icon(icon, color: Colors.orange),
+      child: PaletteIcon(icon: icon, label: label),
     );
   }
 }
