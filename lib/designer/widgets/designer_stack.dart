@@ -7,32 +7,36 @@ import 'package:wt_console_designer/designer/widgets/drag_select.dart';
 import 'package:wt_console_designer/designer/widgets/draggable_item_widget.dart';
 import 'package:wt_console_designer/designer/widgets/selection_box.dart';
 import 'package:wt_console_designer/scroll_pane/scroll_pane_providers.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 final stackKey = GlobalKey();
 
 class DesignerStack extends ConsumerWidget {
-  DesignerStack({Key? key}) : super(key: key);
+  static final log = logger(DesignerStack, level: Level.warning);
+
+  DesignerStack({super.key});
 
   bool panMode = true;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // print('DesignerStack.build');
+    log.v('Building Widget');
+
     ref.watch(itemCountProvider);
     final itemList = ref.read(itemListProvider);
     final selectionNotifier = ref.read(selectionProvider.notifier);
     final moveResizeNotifier = ref.read(moveResizeProvider.notifier);
 
     return LayoutBuilder(builder: (_, constraints) {
-      //print(MediaQuery.of(context).size);
-
       ref.read(scrollPaneStateProvider.notifier).resizeIfNeedBe(MediaQuery.of(context).size);
 
       return GestureDetector(
         onPanUpdate: (details) {
+          log.v('onPanUpdate: $details');
           moveResizeNotifier.update(details, constraints);
         },
         onPanEnd: (details) {
+          log.v('onPanEnd: $details');
           moveResizeNotifier.resizeCanvasIfRequired();
           moveResizeNotifier.unselect();
         },

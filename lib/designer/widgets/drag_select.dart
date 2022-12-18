@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/providers/selection_provider.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 class DragSelect extends ConsumerStatefulWidget {
   final void Function() onPan;
@@ -27,10 +28,12 @@ class DragSelect extends ConsumerStatefulWidget {
 }
 
 class _DragSelectState extends ConsumerState<DragSelect> {
+  static final log = logger(DragSelect, level: Level.warning);
   bool selecting = false;
 
   @override
   Widget build(BuildContext context) {
+    log.v('Building Widget');
     final notifier = ref.read(itemListProvider.notifier);
     final selectionNotifier = ref.read(selectionProvider.notifier);
 
@@ -75,29 +78,9 @@ class _DragSelectState extends ConsumerState<DragSelect> {
                 });
               }
             : null,
-        // onPanUpdate: (details) {
-        //   print(details.localPosition);
-        // },
-        // onHorizontalDragStart: (details) {
-        //   print('== onHorizontalDragStart == ${details.localPosition}');
-        //   final start = details.localPosition;
-        //   onSelect(Point(start.dx, start.dy));
-        // },
-        // onHorizontalDragUpdate: (details) {
-        //   // print('== onHorizontalDragUpdate == ${details.localPosition}');
-        //   final end = details.localPosition;
-        //   widget.onDrag(Point(end.dx, end.dy));
-        // },
-        // onHorizontalDragEnd: (details) {
-        //   onComplete();
-        // },
         onTap: () {
           notifier.clearSelection();
         },
-        // child: Container(
-        //   width: double.infinity,
-        //   height: double.infinity,
-        // ),
       ),
     );
   }

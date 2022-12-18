@@ -16,6 +16,9 @@ dependencies:
   uuid:
   flutter_colorpicker: ^1.0.3
   font_awesome_flutter:
+  wt_logging:
+    git:
+      url: git@github.com:tmcmaster/wt_logging.git
 
 dev_dependencies:
   flutter_test:

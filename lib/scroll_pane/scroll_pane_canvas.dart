@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/scroll_pane/scroll_pane.dart';
 import 'package:wt_console_designer/scroll_pane/scroll_pane_providers.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 class ScrollPaneCanvas extends ConsumerStatefulWidget {
   final Widget child;
@@ -18,11 +19,13 @@ class ScrollPaneCanvas extends ConsumerStatefulWidget {
 }
 
 class _ScrollPaneCanvasState extends ConsumerState<ScrollPaneCanvas> {
+  static final log = logger(ScrollPaneCanvas, level: Level.warning);
+
   Offset start = const Offset(0, 0);
 
   @override
   Widget build(BuildContext context) {
-    // print('Building _ScrollPaneCanvasState');
+    log.v('Building widget');
 
     if (globalStackKey.currentState != null) {
       print(globalStackKey.currentState!.context.size);
@@ -38,9 +41,10 @@ class _ScrollPaneCanvasState extends ConsumerState<ScrollPaneCanvas> {
         return GestureDetector(
           onScaleStart: (details) {
             start = details.localFocalPoint;
-            //print('Start(${start.dx},${start.dy})');
+            log.v('onScaleStart ${details.localFocalPoint}');
           },
           onScaleEnd: (details) {
+            log.v('onScaleEnd');
             if (widget.canScale) {
               notifier.update(
                 scale: state.scale * state.scaleDelta,
@@ -49,6 +53,7 @@ class _ScrollPaneCanvasState extends ConsumerState<ScrollPaneCanvas> {
             }
           },
           onScaleUpdate: (details) {
+            log.v('onScaleUpdate ${details.focalPoint}');
             if (details.pointerCount == 1) {
               final box = globalStackKey.currentContext?.findRenderObject() as RenderBox;
               final offset = box.localToGlobal(Offset.zero);
@@ -87,8 +92,9 @@ class _ScrollPaneCanvasState extends ConsumerState<ScrollPaneCanvas> {
             child: Container(
               width: state.size.width,
               height: state.size.height,
+              // For some reason this decoration is required to enable the panning around to work
               decoration: const BoxDecoration(
-                color: Colors.purple,
+                color: Colors.transparent,
                 // border: Border.all(
                 //   color: Colors.grey.shade500,
                 //   width: 5,
