@@ -21,7 +21,6 @@ class MoveResizeNotifier extends StateNotifier<Item?> {
 
   void select(Item item, TapDownDetails details) {
     mode = _calculateMode(item.size, details.localPosition);
-
     state = item;
   }
 

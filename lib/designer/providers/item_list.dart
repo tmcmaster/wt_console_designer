@@ -61,27 +61,49 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     bool? resize,
   }) {
     final id = uuid.v1();
-    state = [
-      ...state,
-      Item(
-        id: id,
-        point: point ?? const Point(10, 10),
-        size: size ?? const Size(100, 100),
-        color: color ?? Colors.yellow,
-        selected: selected ?? false,
-        highlighted: highlighted ?? false,
-        aspect: aspect,
-        resize: resize ?? true,
-      )
-    ];
+    add(Item(
+      id: id,
+      point: point ?? const Point(10, 10),
+      size: size ?? const Size(100, 100),
+      color: color ?? Colors.yellow,
+      selected: selected ?? false,
+      highlighted: highlighted ?? false,
+      aspect: aspect,
+      resize: resize ?? true,
+    ));
   }
 
   void add(Item newItem) {
-    state = [
-      ...state,
-      newItem,
-    ];
+    final offset = Offset(
+      newItem.point.x < 0 ? newItem.point.x * -1 : 0,
+      newItem.point.y < 0 ? newItem.point.y * -1 : 0,
+    );
+
+    if (offset.dx > 0 || offset.dy > 0) {
+      // move all of the items to the right
+      state = [
+        ...state
+            .map((item) => item.copyWith(
+                    point: Point(
+                  item.point.x + offset.dx,
+                  item.point.y + offset.dy,
+                )))
+            .toList(),
+        newItem.copyWith(
+            point: Point(
+          newItem.point.x + offset.dx,
+          newItem.point.y + offset.dy,
+        )),
+      ];
+    } else {
+      state = [
+        ...state,
+        newItem,
+      ];
+    }
   }
+
+  // TODO: need to review enabling items to be dragged off screen at the top and left.
 
   void updateItems(List<Item> items) {
     final itemMap = <String, Item>{for (var item in items) item.id: item};

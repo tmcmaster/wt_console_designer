@@ -45,10 +45,10 @@ class DraggableItemWidget extends ConsumerWidget {
                   boxShadow: [
                     if (item.highlighted)
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 10,
                         blurRadius: 15,
-                        offset: const Offset(10, 10), // changes position of shadow
+                        // offset: const Offset(10, 10), // changes position of shadow
                       ),
                   ],
                 ),

@@ -67,16 +67,17 @@ class ItemCreationPalette extends StatelessWidget {
                 (item) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TemplateItem(
-                      label: item.label,
-                      icon: item.icon,
-                      item: Item(
-                        id: '',
-                        highlighted: false,
-                        selected: false,
-                        point: const Point(100, 100),
-                        size: item.size,
-                        color: Colors.purple,
-                      )),
+                    label: item.label,
+                    icon: item.icon,
+                    item: Item(
+                      id: '',
+                      highlighted: false,
+                      selected: false,
+                      point: const Point(100, 100),
+                      size: item.size,
+                      color: Colors.purple,
+                    ),
+                  ),
                 ),
               )
               .toList(),
