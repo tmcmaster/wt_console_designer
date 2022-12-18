@@ -161,8 +161,10 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
   // TODO: need to investigate why intersection seems to be selecting extra items.
   void selectInRegion(Rectangle region) {
+    // print('Region(${region.left.toInt()},${region.top.toInt()} : (${region.width.toInt()} x ${region.height.toInt()}))');
     state = state.map((item) {
       final isWithin = region.intersection(item.bounds) != null;
+      // print('Compare($isWithin): ${item.type} : Item(${item.point.x.toInt()}, ${item.point.y.toInt()} : (${item.size.width.toInt()} x ${item.size.height.toInt()}))');
       return isWithin ? item.copyWith(selected: true) : item.copyWith(selected: false);
     }).toList();
   }

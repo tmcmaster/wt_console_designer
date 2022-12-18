@@ -28,7 +28,7 @@ class TemplateItem extends ConsumerWidget {
         final box = stackKey.currentContext?.findRenderObject() as RenderBox;
         final offset = box.localToGlobal(Offset.zero);
 
-        print(item.type);
+        //print(item.type);
 
         notifier.create(
           point: Point(details.offset.dx - offset.dx, details.offset.dy - offset.dy),

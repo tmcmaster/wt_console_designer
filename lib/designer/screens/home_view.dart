@@ -9,24 +9,26 @@ import 'package:wt_console_designer/scroll_pane/scroll_pane.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          const HeaderToolBar(),
-          Expanded(
-            child: Row(
-              children: [
-                const ComponentPalette(),
-                Expanded(
-                  child: ScrollPane(
-                    child: DesignerStack(),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            const HeaderToolBar(),
+            Expanded(
+              child: Row(
+                children: [
+                  const ComponentPalette(),
+                  Expanded(
+                    child: ScrollPane(
+                      child: DesignerStack(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          // const ItemConfiguration(),
-        ],
+            // const ItemConfiguration(),
+          ],
+        ),
       ),
     );
   }

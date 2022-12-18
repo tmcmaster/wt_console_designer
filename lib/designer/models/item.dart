@@ -53,8 +53,8 @@ class Item {
   Rectangle get bounds => Rectangle(
         point.x,
         point.y,
-        point.x + size.width,
-        point.y + size.height,
+        size.width,
+        size.height,
       );
 
   Map<String, dynamic> toJson() {
