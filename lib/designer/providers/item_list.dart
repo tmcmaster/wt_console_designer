@@ -144,4 +144,49 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
     return isBetween;
   }
+
+  void horizontalCenterAlign(List<Item> items) {
+    return _align(items, (item) => Offset(item.point.x + (item.size.width / 2), 0));
+  }
+
+  void leftAlign(List<Item> items) {
+    return _align(items, (item) => Offset(item.point.x.toDouble(), 0));
+  }
+
+  void rightAlign(List<Item> items) {
+    return _align(items, (item) => Offset(item.point.x + item.size.width, 0));
+  }
+
+  void verticalCenterAlign(List<Item> items) {
+    return _align(items, (item) => Offset(0, item.point.y + (item.size.height / 2)));
+  }
+
+  void topAlign(List<Item> items) {
+    return _align(items, (item) => Offset(0, item.point.y.toDouble()));
+  }
+
+  void bottomAlign(List<Item> items) {
+    return _align(items, (item) => Offset(0, item.point.y + item.size.height));
+  }
+
+  void _align(List<Item> items, Offset Function(Item) getValue) {
+    if (items.length < 2) {
+      print('More than one items need to be selected,');
+      return;
+    }
+    final firstItem = items[0];
+    final requiredCenter = getValue(firstItem);
+    final updatedItems = items.sublist(1).map((item) {
+      final center = getValue(item);
+      final offset = requiredCenter - center;
+      // print('RequiredCenter($requiredCenter), Center($center), Delta($offset)');
+      return item.copyWith(
+        point: Point(
+          item.point.x + offset.dx,
+          item.point.y + offset.dy,
+        ),
+      );
+    }).toList();
+    updateItems(updatedItems);
+  }
 }

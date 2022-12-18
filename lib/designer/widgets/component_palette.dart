@@ -88,7 +88,7 @@ class ItemPropertiesPalette extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final itemListNotifier = ref.read(itemListProvider.notifier);
-    final items = ref.read(selectedItems);
+    final items = ref.watch(selectedItems);
     final item = items[0];
     return Container(
       width: 75,
@@ -131,8 +131,43 @@ class ItemPropertiesPalette extends ConsumerWidget {
             },
             icon: const Icon(Icons.color_lens),
           ),
+          if (items.length > 1) const AlignmentControls()
         ],
       ),
+    );
+  }
+}
+
+class AlignmentControls extends ConsumerWidget {
+  const AlignmentControls({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final items = ref.watch(selectedItems);
+    final itemListNotifier = ref.read(itemListProvider.notifier);
+
+    final Map<IconData, void Function(List<Item>)> actions = {
+      Icons.align_horizontal_center: itemListNotifier.horizontalCenterAlign,
+      Icons.align_horizontal_left: itemListNotifier.leftAlign,
+      Icons.align_horizontal_right: itemListNotifier.rightAlign,
+      Icons.align_vertical_center: itemListNotifier.verticalCenterAlign,
+      Icons.align_vertical_top: itemListNotifier.topAlign,
+      Icons.align_vertical_bottom: itemListNotifier.bottomAlign,
+    };
+
+    return Column(
+      children: actions.entries
+          .map(
+            (entry) => IconButton(
+              onPressed: () {
+                entry.value(items);
+              },
+              icon: Icon(entry.key),
+            ),
+          )
+          .toList(),
     );
   }
 }
