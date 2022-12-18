@@ -4,7 +4,7 @@ import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/providers/move_resize_provider.dart';
 
 class DraggableItemWidget extends ConsumerWidget {
-  static const debug = true;
+  static const debug = false;
 
   final String id;
 
@@ -62,9 +62,19 @@ class DraggableItemWidget extends ConsumerWidget {
                           Text('Size(${item.size.width.toInt()}, ${item.size.height.toInt()})'),
                         ],
                       )
-                    : Container(),
+                    : Container(
+                        child: Center(
+                        child: Text(
+                          'Placeholder ${capitalize(item.type.name)}',
+                          style: TextStyle(
+                            color: Colors.grey.shade400,
+                          ),
+                        ),
+                      )),
               ),
             ),
           );
   }
+
+  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 }

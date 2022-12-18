@@ -5,6 +5,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
+import 'package:wt_console_designer/designer/models/item_type.dart';
 import 'package:wt_console_designer/designer/models/palette_item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/widgets/template_item.dart';
@@ -106,23 +107,23 @@ class ItemCreationPalette extends StatelessWidget {
           ...[
             const PaletteItem(
               label: 'Note',
+              type: ItemType.note,
               icon: Icons.note,
-              size: Size(50.0, 50.0),
             ),
             const PaletteItem(
               label: 'Link',
+              type: ItemType.link,
               icon: Icons.link,
-              size: Size(100.0, 50.0),
             ),
             const PaletteItem(
               label: 'To-do',
+              type: ItemType.todo,
               icon: FontAwesomeIcons.listCheck,
-              size: Size(50.0, 75.0),
             ),
             const PaletteItem(
-              label: 'Note',
+              label: 'Line',
+              type: ItemType.line,
               icon: FontAwesomeIcons.line,
-              size: Size(300.0, 75.0),
             ),
           ]
               .map(
@@ -133,11 +134,12 @@ class ItemCreationPalette extends StatelessWidget {
                     icon: item.icon,
                     item: Item(
                       id: '',
+                      type: item.type,
                       highlighted: false,
                       selected: false,
                       point: const Point(100, 100),
                       size: item.size,
-                      color: Colors.purple,
+                      color: item.color,
                     ),
                   ),
                 ),

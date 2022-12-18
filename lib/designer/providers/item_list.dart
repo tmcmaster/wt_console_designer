@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
+import 'package:wt_console_designer/designer/models/item_type.dart';
 import 'package:wt_console_designer/designer/providers/item_list_json.dart';
 
 final itemCountProvider = Provider((ref) => ref.watch(itemListProvider).length);
@@ -35,21 +36,27 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
       : super([
           Item(
             id: "001",
-            point: const Point(10, 10),
-            size: const Size(100, 100),
-            color: Colors.yellow,
+            type: ItemType.note,
+            point: const Point(100, 100),
+            size: const Size(200, 75),
+            color: Colors.white,
             selected: false,
             highlighted: false,
           ),
           Item(
             id: "002",
-            point: const Point(20, 20),
-            size: const Size(100, 100),
-            color: Colors.yellow,
+            type: ItemType.link,
+            point: const Point(200, 200),
+            size: const Size(200, 75),
+            color: Colors.white,
             selected: false,
             highlighted: false,
           ),
-        ]);
+        ]) {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      save();
+    });
+  }
 
   void create({
     Point? point,
@@ -59,10 +66,12 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     bool? highlighted,
     double? aspect,
     bool? resize,
+    ItemType? type,
   }) {
     final id = uuid.v1();
     add(Item(
       id: id,
+      type: type ?? ItemType.note,
       point: point ?? const Point(10, 10),
       size: size ?? const Size(100, 100),
       color: color ?? Colors.yellow,

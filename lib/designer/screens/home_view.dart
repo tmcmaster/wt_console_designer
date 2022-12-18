@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/widgets/component_palette.dart';
 import 'package:wt_console_designer/designer/widgets/designer_stack.dart';
@@ -39,9 +40,13 @@ class HeaderToolBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(itemListProvider.notifier);
+
+    final iconColor = Colors.grey.shade600;
+
     return Container(
       height: 50,
       width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(
@@ -57,7 +62,7 @@ class HeaderToolBar extends ConsumerWidget {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.home),
+                icon: Icon(Icons.home, color: iconColor),
               ),
             ],
           ),
@@ -71,39 +76,28 @@ class HeaderToolBar extends ConsumerWidget {
                     notifier.load();
                   });
                 },
-                icon: const Icon(Icons.download),
+                icon: Icon(Icons.undo_sharp, color: iconColor),
               ),
               IconButton(
                 onPressed: () {
                   notifier.save();
                 },
-                icon: const Icon(
-                  Icons.upload,
+                icon: Icon(
+                  Icons.save,
+                  color: iconColor,
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  notifier.clear();
-                },
-                icon: const Icon(Icons.clear),
               ),
               IconButton(
                 onPressed: () {
                   notifier.clear(true);
                 },
-                icon: const Icon(Icons.delete),
+                icon: Icon(Icons.delete, color: iconColor),
               ),
               IconButton(
                 onPressed: () {
-                  print(notifier.getDefinition());
+                  notifier.clear();
                 },
-                icon: const Icon(Icons.share),
-              ),
-              IconButton(
-                onPressed: () {
-                  notifier.create();
-                },
-                icon: const Icon(Icons.add),
+                icon: Icon(FontAwesomeIcons.trash, color: iconColor),
               ),
             ],
           )

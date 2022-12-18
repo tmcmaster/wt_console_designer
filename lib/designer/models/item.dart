@@ -1,8 +1,11 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:wt_console_designer/designer/models/item_type.dart';
+
 class Item {
   final String id;
+  final ItemType type;
   final Point point;
   final Size size;
   final Color color;
@@ -13,6 +16,7 @@ class Item {
 
   Item({
     required this.id,
+    required this.type,
     required this.point,
     required this.size,
     required this.color,
@@ -24,6 +28,7 @@ class Item {
 
   Item copyWith({
     String? id,
+    ItemType? type,
     Point? point,
     Size? size,
     Color? color,
@@ -34,6 +39,7 @@ class Item {
   }) {
     return Item(
       id: id ?? this.id,
+      type: type ?? this.type,
       point: point ?? this.point,
       size: size ?? this.size,
       color: color ?? this.color,
@@ -54,6 +60,7 @@ class Item {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'type': type.index,
       'point': {
         'x': point.x,
         'y': point.y,
@@ -78,6 +85,7 @@ class Item {
 
     return Item(
       id: (map['id'] ?? ""),
+      type: ItemType.values[map['type']],
       point: Point(
         (pointMap['x'] ?? -1) + 0.0,
         (pointMap['y'] ?? -1) + 0.0,

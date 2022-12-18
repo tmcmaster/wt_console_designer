@@ -20,9 +20,10 @@ class SelectionBox extends ConsumerWidget {
               width: region.width.toDouble(),
               height: region.height.toDouble(),
               decoration: BoxDecoration(
+                color: Colors.grey.shade400.withOpacity(0.3),
                 border: Border.all(
                   width: 2,
-                  color: Colors.orange,
+                  color: Colors.grey,
                 ),
               ),
               child: debug && region.width > 100 && region.height > 40
