@@ -6,6 +6,7 @@ import 'package:wt_console_designer/designer/providers/selection_provider.dart';
 import 'package:wt_console_designer/designer/widgets/drag_select.dart';
 import 'package:wt_console_designer/designer/widgets/draggable_item_widget.dart';
 import 'package:wt_console_designer/designer/widgets/selection_box.dart';
+import 'package:wt_console_designer/scroll_pane/scroll_pane_providers.dart';
 
 final stackKey = GlobalKey();
 
@@ -23,6 +24,10 @@ class DesignerStack extends ConsumerWidget {
     final moveResizeNotifier = ref.read(moveResizeProvider.notifier);
 
     return LayoutBuilder(builder: (_, constraints) {
+      //print(MediaQuery.of(context).size);
+
+      ref.read(scrollPaneStateProvider.notifier).resizeIfNeedBe(MediaQuery.of(context).size);
+
       return GestureDetector(
         onPanUpdate: (details) {
           moveResizeNotifier.update(details, constraints);

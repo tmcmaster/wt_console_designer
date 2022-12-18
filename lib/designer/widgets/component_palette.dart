@@ -120,11 +120,11 @@ class ItemCreationPalette extends StatelessWidget {
               type: ItemType.todo,
               icon: FontAwesomeIcons.listCheck,
             ),
-            const PaletteItem(
-              label: 'Line',
-              type: ItemType.line,
-              icon: FontAwesomeIcons.line,
-            ),
+            // const PaletteItem(
+            //   label: 'Line',
+            //   type: ItemType.line,
+            //   icon: FontAwesomeIcons.line,
+            // ),
           ]
               .map(
                 (item) => Padding(

@@ -74,7 +74,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
       type: type ?? ItemType.note,
       point: point ?? const Point(10, 10),
       size: size ?? const Size(100, 100),
-      color: color ?? Colors.yellow,
+      color: color ?? Colors.white,
       selected: selected ?? false,
       highlighted: highlighted ?? false,
       aspect: aspect,

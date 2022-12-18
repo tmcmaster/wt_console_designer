@@ -30,6 +30,17 @@ class ScrollPaneStateNotifier extends StateNotifier<ScrollPaneState> {
     );
   }
 
+  void resizeIfNeedBe(Size screenSize) {
+    if (state.size.width < screenSize.width || state.size.height < screenSize.height) {
+      final newSize = Size(
+        state.size.width < screenSize.width ? screenSize.width + 100 : state.size.width,
+        state.size.height < screenSize.height ? screenSize.height : state.size.height,
+      );
+      // print('Resizing canvas to $newSize');
+      state.copyWith(size: newSize);
+    }
+  }
+
   void minSize(Size size) {
     if (size.width > state.size.width || size.height > state.size.height) {
       update(
