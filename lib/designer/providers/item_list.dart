@@ -136,6 +136,11 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     state = state.map((item) => item.selected ? item.copyWith(selected: false) : item).toList();
   }
 
+  void clearHighlight() {
+    state =
+        state.map((item) => item.highlighted ? item.copyWith(highlighted: false) : item).toList();
+  }
+
   void toggleSelection(Item itemToToggle, {bool clearSelection = false}) {
     state = [
       ...state
@@ -258,9 +263,11 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
             ? item
             : item.copyWith(
                 point: Point(
-                item.point.x + delta.dx,
-                item.point.y + delta.dy,
-              )))
+                  item.point.x + delta.dx,
+                  item.point.y + delta.dy,
+                ),
+                highlighted: true,
+              ))
         .toList();
   }
 
@@ -270,9 +277,11 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
             ? item
             : item.copyWith(
                 point: Point(
-                item.point.x + delta.dx,
-                item.point.y + delta.dy,
-              )))
+                  item.point.x + delta.dx,
+                  item.point.y + delta.dy,
+                ),
+                highlighted: true,
+              ))
         .toList();
   }
 }

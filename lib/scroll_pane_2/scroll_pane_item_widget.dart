@@ -4,22 +4,22 @@ import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/providers/move_resize_provider.dart';
 import 'package:wt_logging/wt_logging.dart';
 
-class DraggableItemWidget2 extends ConsumerStatefulWidget {
+class ScrollPaneItemWidget extends ConsumerStatefulWidget {
   static const debug = false;
 
   final String id;
 
-  const DraggableItemWidget2({
+  const ScrollPaneItemWidget({
     super.key,
     required this.id,
   });
 
   @override
-  ConsumerState<DraggableItemWidget2> createState() => _DraggableItemWidget2State();
+  ConsumerState<ScrollPaneItemWidget> createState() => _DraggableItemWidget2State();
 }
 
-class _DraggableItemWidget2State extends ConsumerState<DraggableItemWidget2> {
-  static final log = logger(DraggableItemWidget2, level: Level.warning);
+class _DraggableItemWidget2State extends ConsumerState<ScrollPaneItemWidget> {
+  static final log = logger(ScrollPaneItemWidget, level: Level.warning);
 
   Offset? point;
   bool dragging = false;
@@ -49,6 +49,7 @@ class _DraggableItemWidget2State extends ConsumerState<DraggableItemWidget2> {
               onPanEnd: (details) {
                 dragging = false;
                 resizing = false;
+                itemListNotifier.clearHighlight();
               },
               onPanStart: (details) {
                 point = details.localPosition;
@@ -101,7 +102,7 @@ class _DraggableItemWidget2State extends ConsumerState<DraggableItemWidget2> {
                 ),
                 width: item.size.width,
                 height: item.size.height,
-                child: DraggableItemWidget2.debug && item.size.width > 100 && item.size.height > 40
+                child: ScrollPaneItemWidget.debug && item.size.width > 100 && item.size.height > 40
                     ? Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [

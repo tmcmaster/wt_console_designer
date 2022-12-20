@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/providers/selection_provider.dart';
 import 'package:wt_console_designer/designer/widgets/designer_stack.dart';
-import 'package:wt_console_designer/designer/widgets/draggable_item_widget_2.dart';
+import 'package:wt_console_designer/scroll_pane_2/scroll_pane_item_widget.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 part 'scroll_pane_canvas.dart';
@@ -91,7 +91,7 @@ class _ScrollPaneState extends ConsumerState<ScrollPane> {
                 ),
                 ...items.map((item) {
                   log.d('Building item ${item.id}');
-                  return DraggableItemWidget2(id: item.id);
+                  return ScrollPaneItemWidget(id: item.id);
                 }).toList(),
               ],
             ),
