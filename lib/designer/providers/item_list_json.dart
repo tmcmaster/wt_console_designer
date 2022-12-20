@@ -24,6 +24,14 @@ class ItemListJsonNotifier extends StateNotifier<List<Map<String, dynamic>>> {
             "color": 4294961979,
             "selected": true
           },
+          {
+            "id": "003",
+            "type": 1,
+            "point": {"x": 451.2578125, "y": 317.9375},
+            "size": {"width": 100.0, "height": 100.0},
+            "color": 4294961979,
+            "selected": true
+          },
         ]);
 
   void update(List<Map<String, dynamic>> data) {

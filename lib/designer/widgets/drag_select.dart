@@ -9,8 +9,8 @@ import 'package:wt_logging/wt_logging.dart';
 
 class DragSelect extends ConsumerStatefulWidget {
   final void Function() onPan;
-  final void Function(Point) onSelect;
-  final void Function(Point) onDrag;
+  final void Function(Point<double>) onSelect;
+  final void Function(Point<double>) onDrag;
   final void Function() onComplete;
   final BoxConstraints constraints;
 

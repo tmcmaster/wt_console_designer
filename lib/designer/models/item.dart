@@ -6,7 +6,7 @@ import 'package:wt_console_designer/designer/models/item_type.dart';
 class Item {
   final String id;
   final ItemType type;
-  final Point point;
+  final Point<double> point;
   final Size size;
   final Color color;
   final bool selected;
@@ -29,7 +29,7 @@ class Item {
   Item copyWith({
     String? id,
     ItemType? type,
-    Point? point,
+    Point<double>? point,
     Size? size,
     Color? color,
     bool? selected,
@@ -50,7 +50,7 @@ class Item {
     );
   }
 
-  Rectangle get bounds => Rectangle(
+  Rectangle<double> get bounds => Rectangle(
         point.x,
         point.y,
         size.width,

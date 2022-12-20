@@ -52,6 +52,15 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
             selected: false,
             highlighted: false,
           ),
+          Item(
+            id: "003",
+            type: ItemType.link,
+            point: const Point(300, 300),
+            size: const Size(200, 75),
+            color: Colors.white,
+            selected: false,
+            highlighted: false,
+          ),
         ]) {
     Future.delayed(const Duration(milliseconds: 100), () {
       save();
@@ -59,7 +68,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   }
 
   void create({
-    Point? point,
+    Point<double>? point,
     Size? size,
     Color? color,
     bool? selected,
@@ -72,7 +81,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     add(Item(
       id: id,
       type: type ?? ItemType.note,
-      point: point ?? const Point(10, 10),
+      point: point ?? const Point<double>(10, 10),
       size: size ?? const Size(100, 100),
       color: color ?? Colors.white,
       selected: selected ?? false,
@@ -228,6 +237,31 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     Future.delayed(const Duration(milliseconds: 50), () {
       add(selectedItem);
     });
+  }
+
+  void resizeItem(String id, Offset delta) {
+    state = state
+        .map((item) => item.id != id
+            ? item
+            : item.copyWith(
+                size: Size(
+                  item.size.width + delta.dx,
+                  item.size.height + delta.dy,
+                ),
+              ))
+        .toList();
+  }
+
+  void moveItem(String id, Offset delta) {
+    state = state
+        .map((item) => item.id != id
+            ? item
+            : item.copyWith(
+                point: Point(
+                item.point.x + delta.dx,
+                item.point.y + delta.dy,
+              )))
+        .toList();
   }
 
   void moveSelected(String id, Offset delta) {

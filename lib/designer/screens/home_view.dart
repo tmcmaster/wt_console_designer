@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wt_console_designer/designer/widgets/component_palette.dart';
-import 'package:wt_console_designer/designer/widgets/designer_stack.dart';
 import 'package:wt_console_designer/designer/widgets/header_toolbar.dart';
-import 'package:wt_console_designer/scroll_pane/scroll_pane.dart';
+import 'package:wt_console_designer/scroll_pane_2/scroll_pane.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -17,9 +16,10 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   const ComponentPalette(),
                   Expanded(
-                    child: ScrollPane(
-                      child: DesignerStack(),
-                    ),
+                    child: ScrollPane(),
+                    // child: ScrollPane(
+                    //   child: DesignerStack(),
+                    // ),
                   ),
                 ],
               ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/screens/home_view.dart';
+import 'package:wt_console_designer/scroll_pane_2/scroll_pane.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 void main() async {
   runApp(
@@ -32,8 +34,30 @@ class ConsoleDesignerApp extends StatelessWidget {
       //         primarySwatch: Colors.blue,
       //       ),
       // darkTheme: _testParabeacThemes ? FlutterThemesTheme.themeDataDark : ThemeData.dark(),
+      // home: const TestApp(),
       home: HomeScreen(),
       // home: const ScrollPaneView(),
+    );
+  }
+}
+
+class TestApp extends StatelessWidget {
+  static final log = logger(TestApp, level: Level.debug);
+
+  const TestApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    log.d('Building Widget.');
+    return Scaffold(
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Container(
+          padding: const EdgeInsets.all(50),
+          child: ScrollPane(),
+        ),
+      ),
     );
   }
 }

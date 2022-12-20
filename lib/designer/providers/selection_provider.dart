@@ -3,22 +3,22 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 
-final selectionProvider = StateNotifierProvider<SelectionStateNotifier, Rectangle?>(
+final selectionProvider = StateNotifierProvider<SelectionStateNotifier, Rectangle<double>?>(
   (ref) => SelectionStateNotifier(ref),
 );
 
-class SelectionStateNotifier extends StateNotifier<Rectangle?> {
+class SelectionStateNotifier extends StateNotifier<Rectangle<double>?> {
   final Ref ref;
-  Point? _start;
-  Point? _end;
+  Point<double>? _start;
+  Point<double>? _end;
 
   SelectionStateNotifier(this.ref) : super(null);
 
-  void start(Point point) {
+  void start(Point<double> point) {
     _start = point;
   }
 
-  void drag(Point point) {
+  void drag(Point<double> point) {
     if (_start != null) {
       final x = point.x - _start!.x;
       final y = point.y - _start!.y;
@@ -40,5 +40,9 @@ class SelectionStateNotifier extends StateNotifier<Rectangle?> {
     _start = null;
     _end = null;
     state = null;
+  }
+
+  void setRegion(Rectangle<double> region) {
+    state = region;
   }
 }
