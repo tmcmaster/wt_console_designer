@@ -22,7 +22,7 @@ class ScrollPaneCanvas extends ConsumerWidget {
       child: Container(
         width: state.size.width,
         height: state.size.height,
-        color: Colors.blueAccent,
+        color: Colors.grey.shade300,
         padding: const EdgeInsets.all(0),
         child: SizedBox(
           width: double.infinity,
