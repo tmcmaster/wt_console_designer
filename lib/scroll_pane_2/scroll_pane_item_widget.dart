@@ -30,7 +30,6 @@ class _DraggableItemWidget2State extends ConsumerState<ScrollPaneItemWidget> {
     log.v('DraggableItemWidget(${widget.id}).build');
 
     final item = ref.watch(itemProvider(widget.id));
-    final moveResizeNotifier = ref.read(moveResizeProvider.notifier);
     final itemListNotifier = ref.read(itemListProvider.notifier);
 
     return item == null
@@ -53,34 +52,20 @@ class _DraggableItemWidget2State extends ConsumerState<ScrollPaneItemWidget> {
               },
               onPanStart: (details) {
                 point = details.localPosition;
-
-                // print('===>> onPanStart : Point(${point?.dx}, ${point?.dy})');
               },
               onPanUpdate: (details) {
                 if (dragging) {
-                  // print(
-                  //     'Widget Moving : $dragging : ${details.globalPosition} : Point(${point?.dx}, ${point?.dy})');
-
                   if (item.selected) {
                     itemListNotifier.moveSelected(item.id, details.delta);
                   }
-
                   itemListNotifier.moveItem(item.id, details.delta);
                 } else if (resizing) {
                   itemListNotifier.resizeItem(item.id, details.delta);
                 }
               },
               onDoubleTap: () {
-                // print('Bring to front ${item.id}');
                 itemListNotifier.bringToFront(item);
               },
-              // onTapDown: (details) {
-              //   // print('Selected Item: ${item.id}');
-              //   moveResizeNotifier.select(item, details);
-              //   // if (item.selected) {
-              //   //   itemListNotifier.updateItem(item.copyWith(selected: false));
-              //   // }
-              // },
               onLongPress: () {
                 itemListNotifier.updateItem(item.copyWith(selected: !item.selected));
               },
