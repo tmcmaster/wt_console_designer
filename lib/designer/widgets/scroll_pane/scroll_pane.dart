@@ -4,14 +4,16 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
+import 'package:wt_console_designer/designer/providers/item_widget_factory.dart';
 import 'package:wt_console_designer/designer/providers/selection_provider.dart';
-import 'package:wt_console_designer/designer/widgets/designer_stack.dart';
-import 'package:wt_console_designer/scroll_pane_2/scroll_pane_item_widget.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 part 'scroll_pane_canvas.dart';
 part 'scroll_pane_gesture_detector.dart';
+part 'scroll_pane_interactive_mode.dart';
+part 'scroll_pane_item_widget.dart';
 part 'scroll_pane_notifier.dart';
 part 'scroll_pane_select_box.dart';
 part 'scroll_pane_selection_box.dart';

@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
-import 'package:wt_console_designer/designer/widgets/designer_stack.dart';
+import 'package:wt_console_designer/designer/providers/selection_provider.dart';
 import 'package:wt_console_designer/designer/widgets/palette_icon.dart';
 
 class TemplateItem extends ConsumerWidget {
@@ -30,8 +30,6 @@ class TemplateItem extends ConsumerWidget {
         final box = stackKey.currentContext?.findRenderObject() as RenderBox;
         final offset = box.localToGlobal(Offset.zero);
 
-        //print(item.type);
-
         notifier.create(
           point: Point(details.offset.dx - offset.dx, details.offset.dy - offset.dy),
           size: item.size,
@@ -41,9 +39,15 @@ class TemplateItem extends ConsumerWidget {
       },
       feedback: Container(
         color: item.color.withOpacity(0.5),
-        width: 50, //item.size.width,
-        height: 50, //item.size.height,
-        child: lottie == null ? null : Lottie.asset(lottie!, width: 50, height: 50),
+        width: item.size.width,
+        height: item.size.height,
+        child: lottie == null
+            ? Icon(icon)
+            : Lottie.asset(
+                lottie!,
+                width: 50,
+                height: 50,
+              ),
       ),
       childWhenDragging: Opacity(
         opacity: 0.3,

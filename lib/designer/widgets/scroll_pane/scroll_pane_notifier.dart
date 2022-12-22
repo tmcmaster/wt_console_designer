@@ -34,6 +34,16 @@ class ScrollPaneStateNotifier extends StateNotifier<ScrollPaneState> {
     );
   }
 
+  void update({
+    Offset? offset,
+    Size? size,
+  }) {
+    state = state.copyWith(
+      offset: offset,
+      size: size,
+    );
+  }
+
   void windowResize(double screenWidth, double screenHeight) {
     final newWidth = state.size.width < screenWidth ? screenWidth : state.size.width;
     final newHeight = state.size.height < screenHeight ? screenHeight : state.size.height;

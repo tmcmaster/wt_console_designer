@@ -1,7 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
+
+final stackKey = GlobalKey();
 
 final selectionProvider = StateNotifierProvider<SelectionStateNotifier, Rectangle<double>?>(
   (ref) => SelectionStateNotifier(ref),

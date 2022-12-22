@@ -8,7 +8,7 @@ import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/models/item_type.dart';
 import 'package:wt_console_designer/designer/models/palette_item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
-import 'package:wt_console_designer/designer/widgets/template_item.dart';
+import 'package:wt_console_designer/designer/widgets/component_palette/template_item.dart';
 
 part 'alignment_controls.dart';
 part 'item_creation_palette.dart';

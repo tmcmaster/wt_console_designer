@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/screens/home_view.dart';
-import 'package:wt_console_designer/scroll_pane_2/scroll_pane.dart';
+import 'package:wt_console_designer/designer/widgets/scroll_pane/scroll_pane.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 void main() async {

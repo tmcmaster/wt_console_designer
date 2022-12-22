@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/models/item_type.dart';
 
@@ -26,13 +27,7 @@ class ItemWidgetFactory {
   };
 
   Widget createWidget(Item item) {
-    final builder = builders[item.type] ??
-        (item) => Container(
-              width: item.size.width,
-              height: item.size.height,
-              color: item.color,
-            );
-
+    final builder = builders[item.type] ?? (item) => const Icon(FontAwesomeIcons.question);
     return builder(item);
   }
 }

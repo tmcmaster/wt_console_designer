@@ -47,7 +47,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
             id: "002",
             type: ItemType.toggle,
             point: const Point(200, 200),
-            size: const Size(50, 75),
+            size: const Size(75, 50),
             color: Colors.white,
             selected: false,
             highlighted: false,
@@ -64,7 +64,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
           Item(
             id: "004",
             type: ItemType.info,
-            point: const Point(400, 400),
+            point: const Point(100, 400),
             size: const Size(200, 50),
             color: Colors.white,
             selected: false,
