@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/widgets/designer_stack.dart';
@@ -11,12 +12,13 @@ class TemplateItem extends ConsumerWidget {
   final IconData icon;
   final String label;
   final Item item;
-
+  final String? lottie;
   const TemplateItem({
     Key? key,
     required this.item,
     required this.icon,
     required this.label,
+    this.lottie,
   }) : super(key: key);
 
   @override
@@ -39,14 +41,19 @@ class TemplateItem extends ConsumerWidget {
       },
       feedback: Container(
         color: item.color.withOpacity(0.5),
-        width: item.size.width,
-        height: item.size.height,
+        width: 50, //item.size.width,
+        height: 50, //item.size.height,
+        child: lottie == null ? null : Lottie.asset(lottie!, width: 50, height: 50),
       ),
       childWhenDragging: Opacity(
         opacity: 0.3,
-        child: PaletteIcon(icon: icon, label: label),
+        child: lottie == null
+            ? PaletteIcon(icon: icon, label: label)
+            : Lottie.asset(lottie!, animate: true),
       ),
-      child: PaletteIcon(icon: icon, label: label),
+      child: lottie == null
+          ? PaletteIcon(icon: icon, label: label)
+          : Lottie.asset(lottie!, animate: false),
     );
   }
 }

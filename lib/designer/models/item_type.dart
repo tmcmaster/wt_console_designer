@@ -1,6 +1,7 @@
 enum ItemType {
-  note,
-  link,
-  todo,
-  line;
+  icon,
+  toggle,
+  slider,
+  info,
+  select,
 }

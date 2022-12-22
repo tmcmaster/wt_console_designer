@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
+import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
+import 'package:wt_console_designer/designer/providers/item_widget_factory.dart';
 import 'package:wt_console_designer/designer/providers/move_resize_provider.dart';
 import 'package:wt_logging/wt_logging.dart';
 
@@ -24,7 +27,6 @@ class _DraggableItemWidget2State extends ConsumerState<ScrollPaneItemWidget> {
   Offset? point;
   bool dragging = false;
   bool resizing = false;
-
   @override
   Widget build(BuildContext context) {
     log.v('DraggableItemWidget(${widget.id}).build');
@@ -87,26 +89,41 @@ class _DraggableItemWidget2State extends ConsumerState<ScrollPaneItemWidget> {
                 ),
                 width: item.size.width,
                 height: item.size.height,
-                child: ScrollPaneItemWidget.debug && item.size.width > 100 && item.size.height > 40
-                    ? Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('Pos(${item.point.x.toInt()},${item.point.y.toInt()})'),
-                          Text('Size(${item.size.width.toInt()}, ${item.size.height.toInt()})'),
-                        ],
-                      )
-                    : Container(
-                        child: Center(
-                        child: Text(
-                          'Placeholder ${capitalize(item.type.name)}',
-                          style: TextStyle(
-                            color: Colors.grey.shade400,
-                          ),
-                        ),
-                      )),
+                child: IgnorePointer(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: _buildItemWidget(item),
+                  ),
+                ),
+                // Container(
+                //         child: Center(
+                //         child: Text(
+                //           'Placeholder ${capitalize(item.type.name)}',
+                //           style: TextStyle(
+                //             color: Colors.grey.shade400,
+                //           ),
+                //         ),
+                //       ),
+                // ),
               ),
             ),
           );
+  }
+
+  Widget _buildItemWidget(Item item) {
+    return ref.read(itemWidgetFactoryProvider).createWidget(item);
+  }
+
+  Widget _buildItemWidgetHold(Item item) {
+    return ScrollPaneItemWidget.debug && item.size.width > 100 && item.size.height > 40
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Pos(${item.point.x.toInt()},${item.point.y.toInt()})'),
+              Text('Size(${item.size.width.toInt()}, ${item.size.height.toInt()})'),
+            ],
+          )
+        : Lottie.asset('assets/Lottie Lego.json', animate: true);
   }
 
   InteractionMode _calculateMode(Size size, Offset offset) {

@@ -168,7 +168,7 @@ class _DragAndPanDetectorMacos extends _DragAndPanDetectorBase {
         //   pan = true;
         // },
         onPanEnd: (details) {
-          if (!state.pan) {
+          if (!state.pan && state.start != null && state.end != null) {
             onSelected?.call(createRegion(state.start!, state.end!));
           }
           log.v("Pan End : ");

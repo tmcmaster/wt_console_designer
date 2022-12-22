@@ -7,12 +7,13 @@ class PaletteItem {
   final Size size;
   final String label;
   final Color color;
-
+  final String? lottie;
   const PaletteItem({
     required this.icon,
     this.size = const Size(250, 59),
     required this.type,
     required this.label,
+    this.lottie,
     this.color = Colors.white,
   });
 }

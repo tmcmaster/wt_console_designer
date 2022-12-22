@@ -106,25 +106,35 @@ class ItemCreationPalette extends StatelessWidget {
         children: [
           ...[
             const PaletteItem(
-              label: 'Note',
-              type: ItemType.note,
-              icon: Icons.note,
+              label: 'Icon',
+              type: ItemType.icon,
+              icon: FontAwesomeIcons.icons,
+              size: Size(50, 50),
             ),
             const PaletteItem(
-              label: 'Link',
-              type: ItemType.link,
-              icon: Icons.link,
+              label: 'Toggle',
+              type: ItemType.toggle,
+              icon: Icons.toggle_on,
+              size: Size(100, 50),
             ),
             const PaletteItem(
-              label: 'To-do',
-              type: ItemType.todo,
+              label: 'Slider',
+              type: ItemType.slider,
               icon: FontAwesomeIcons.listCheck,
+              size: Size(150, 50),
             ),
-            // const PaletteItem(
-            //   label: 'Line',
-            //   type: ItemType.line,
-            //   icon: FontAwesomeIcons.line,
-            // ),
+            const PaletteItem(
+              label: 'Info',
+              type: ItemType.info,
+              icon: FontAwesomeIcons.info,
+              size: Size(200, 50),
+            ),
+            const PaletteItem(
+              label: 'Select',
+              type: ItemType.select,
+              icon: Icons.arrow_drop_down,
+              size: Size(150, 100),
+            ),
           ]
               .map(
                 (item) => Padding(
@@ -132,6 +142,7 @@ class ItemCreationPalette extends StatelessWidget {
                   child: TemplateItem(
                     label: item.label,
                     icon: item.icon,
+                    lottie: item.lottie,
                     item: Item(
                       id: '',
                       type: item.type,

@@ -19,6 +19,7 @@ dependencies:
   wt_logging:
     git:
       url: git@github.com:tmcmaster/wt_logging.git
+  lottie: ^2.1.0
 
 dev_dependencies:
   flutter_test:

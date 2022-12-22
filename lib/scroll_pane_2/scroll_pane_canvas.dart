@@ -29,9 +29,7 @@ class ScrollPaneCanvas extends ConsumerWidget {
           height: double.infinity,
           child: Stack(
             key: stackKey,
-            children: [
-              ...children,
-            ],
+            children: children,
           ),
         ),
       ),
