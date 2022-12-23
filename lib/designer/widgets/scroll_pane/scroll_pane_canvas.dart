@@ -1,7 +1,7 @@
 part of 'scroll_pane.dart';
 
 class ScrollPaneCanvas extends ConsumerWidget {
-  static final log = logger(ScrollPaneCanvas, level: Level.debug);
+  static final log = logger(ScrollPaneCanvas, level: Level.warning);
 
   final List<Widget> children;
 

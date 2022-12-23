@@ -20,17 +20,23 @@ part 'scroll_pane_selection_box.dart';
 part 'scroll_pane_state.dart';
 
 class ScrollPane extends ConsumerWidget {
-  static final log = logger(ScrollPane, level: Level.debug);
+  static final log = logger(ScrollPane, level: Level.verbose);
   final _key = GlobalKey();
 
-  ScrollPane({super.key});
+  final bool panEnabled;
+  final List<Widget> children;
+
+  ScrollPane({
+    super.key,
+    this.panEnabled = false,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     log.d('=== Building Widget.');
 
     final notifier = ref.read(scrollPaneStateProvider.notifier);
-    final items = ref.read(itemListProvider);
 
     ref.watch(itemCountProvider);
 
@@ -59,11 +65,10 @@ class ScrollPane extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const DragAndPanDetector(),
-                ...items.map((item) {
-                  log.d('Building item ${item.id}');
-                  return ScrollPaneItemWidget(id: item.id);
-                }).toList(),
+                const DragAndPanDetector(
+                  panEnabled: true,
+                ),
+                ...children,
               ],
             ),
             const ScrollPaneSelectionBox(),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_console_designer/designer/screens/home_view.dart';
-import 'package:wt_console_designer/designer/widgets/scroll_pane/scroll_pane.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 void main() async {
@@ -55,7 +54,7 @@ class TestApp extends StatelessWidget {
         height: double.infinity,
         child: Container(
           padding: const EdgeInsets.all(50),
-          child: ScrollPane(),
+          child: HomeScreen(),
         ),
       ),
     );

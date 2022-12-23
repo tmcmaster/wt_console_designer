@@ -3,7 +3,11 @@ part of 'scroll_pane.dart';
 class DragAndPanDetector extends ConsumerWidget {
   static final log = logger(DragAndPanDetector, level: Level.warning);
 
-  const DragAndPanDetector({super.key});
+  final bool panEnabled;
+  const DragAndPanDetector({
+    super.key,
+    this.panEnabled = true,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,7 +49,9 @@ class DragAndPanDetector extends ConsumerWidget {
 
   onPanning(ScrollPaneStateNotifier notifier, Offset offset) {
     log.v('DragAndPanDetector Panning: $offset');
-    notifier.movePoint(offset);
+    if (panEnabled) {
+      notifier.movePoint(offset);
+    }
   }
 }
 
@@ -163,10 +169,10 @@ class _DragAndPanDetectorMacos extends _DragAndPanDetectorBase {
           state.pan = false;
           state.start = details.localPosition;
         },
-        // onTapUp: (details) {
-        //   // print('Tap Up : ');
-        //   pan = true;
-        // },
+        onTapUp: (details) {
+          log.v('Tap Up : ');
+          state.pan = true;
+        },
         onPanEnd: (details) {
           if (!state.pan && state.start != null && state.end != null) {
             onSelected?.call(createRegion(state.start!, state.end!));

@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_console_designer/designer/providers/item_list.dart';
+import 'package:wt_console_designer/designer/providers/item_widget_factory.dart';
 import 'package:wt_console_designer/designer/widgets/scroll_pane/scroll_pane.dart';
+import 'package:wt_logging/wt_logging.dart';
 
-class ScrollPaneView extends StatelessWidget {
+class ScrollPaneView extends ConsumerWidget {
+  static final log = logger(ScrollPaneView, level: Level.verbose);
+
   const ScrollPaneView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    log.d('Building Widget');
+
+    ref.watch(itemCountProvider);
+    final items = ref.read(itemListProvider);
+    final componentFactory = ref.read(itemWidgetFactoryProvider);
+
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(30),
-        color: Colors.blue,
-        child: LayoutBuilder(builder: (context, constraints) {
-          return SizedBox(
-            width: constraints.maxWidth,
-            height: constraints.maxHeight,
-            child: ScrollPane(),
-          );
-        }),
-      ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return SizedBox(
+          width: constraints.maxWidth,
+          height: constraints.maxHeight,
+          child: ScrollPane(
+            children: items.map((item) {
+              log.d('Building item ${item.id}');
+              final component = componentFactory.createWidget(item);
+              return ScrollPaneItemWidget(id: item.id, child: component);
+            }).toList(),
+          ),
+        );
+      }),
     );
   }
 }
