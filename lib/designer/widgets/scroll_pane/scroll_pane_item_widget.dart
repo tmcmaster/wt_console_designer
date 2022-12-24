@@ -48,7 +48,11 @@ class ScrollPaneItemWidget extends ConsumerWidget {
                   itemListNotifier.bringToFront(item);
                 },
                 onSelect: () {
-                  itemListNotifier.updateItem(item.copyWith(selected: !item.layout.selected));
+                  itemListNotifier.updateItem(item.copyWith(
+                    layout: item.layout.copyWith(
+                      selected: !item.layout.selected,
+                    ),
+                  ));
                 },
                 onResize: (delta) {
                   itemListNotifier.resizeItem(item.id, delta);
@@ -60,6 +64,7 @@ class ScrollPaneItemWidget extends ConsumerWidget {
                   itemListNotifier.moveItem(item.id, delta);
                 },
                 onFinish: () {
+                  // TODO: check if any dragged item has been dropped off the edge of canvas
                   itemListNotifier.clearHighlight();
                 },
                 resizeHandleRegion:

@@ -253,7 +253,9 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     state = state.map((item) {
       final Item newItem = item.layout.selected
           ? item.copyWith(
-              selected: false,
+              layout: item.layout.copyWith(
+                selected: false,
+              ),
             )
           : item;
       return newItem;
@@ -304,8 +306,17 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     // print('Region(${region.left.toInt()},${region.top.toInt()} : (${region.width.toInt()} x ${region.height.toInt()}))');
     state = state.map((Item item) {
       final isWithin = region.intersection(item.layout.bounds) != null;
-      final Item newItem =
-          isWithin ? item.copyWith(selected: true) : item.copyWith(selected: false);
+      final Item newItem = isWithin
+          ? item.copyWith(
+              layout: item.layout.copyWith(
+                selected: true,
+              ),
+            )
+          : item.copyWith(
+              layout: item.layout.copyWith(
+                selected: false,
+              ),
+            );
       return newItem;
     }).toList();
   }
@@ -345,19 +356,19 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
   void _align(List<Item> items, Offset Function(Item) getValue) {
     if (items.length < 2) {
-      print('More than one items need to be selected,');
-      return;
+      throw Exception('More than one items need to be selected,');
     }
     final firstItem = items[0];
     final requiredValue = getValue(firstItem);
     final List<Item> updatedItems = items.sublist(1).map((item) {
       final value = getValue(item);
       final offset = requiredValue - value;
-      // print('RequiredCenter($requiredCenter), Center($center), Delta($offset)');
       final Item newItem = item.copyWith(
-        point: Point(
-          item.layout.point.x + offset.dx,
-          item.layout.point.y + offset.dy,
+        layout: item.layout.copyWith(
+          point: Point(
+            item.layout.point.x + offset.dx,
+            item.layout.point.y + offset.dy,
+          ),
         ),
       );
       return newItem;
@@ -410,11 +421,13 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
       final Item newItem = item.id == id || !item.layout.selected
           ? item
           : item.copyWith(
-              point: Point(
-                item.layout.point.x + delta.dx,
-                item.layout.point.y + delta.dy,
+              layout: item.layout.copyWith(
+                point: Point(
+                  item.layout.point.x + delta.dx,
+                  item.layout.point.y + delta.dy,
+                ),
+                highlighted: true,
               ),
-              highlighted: true,
             );
       return newItem;
     }).toList();

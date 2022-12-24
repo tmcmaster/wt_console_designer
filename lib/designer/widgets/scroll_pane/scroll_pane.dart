@@ -13,7 +13,6 @@ part 'scroll_pane_gesture_detector.dart';
 part 'scroll_pane_interactive_mode.dart';
 part 'scroll_pane_item_widget.dart';
 part 'scroll_pane_notifier.dart';
-part 'scroll_pane_select_box.dart';
 part 'scroll_pane_selection_box.dart';
 part 'scroll_pane_state.dart';
 
