@@ -49,10 +49,14 @@ class ItemPropertiesPalette extends ConsumerWidget {
                   title: const Text('Pick a color!'),
                   content: SingleChildScrollView(
                     child: MaterialPicker(
-                      pickerColor: items.isNotEmpty ? items[0].color : Colors.white,
+                      pickerColor: items.isNotEmpty ? items[0].layout.color : Colors.white,
                       onColorChanged: (color) {
-                        itemListNotifier
-                            .updateItems(items.map((item) => item.copyWith(color: color)).toList());
+                        itemListNotifier.updateItems(items.map((item) {
+                          final Item newItem = item.copyWith(
+                            layout: item.layout.copyWith(color: color),
+                          );
+                          return newItem;
+                        }).toList());
                       },
                     ),
                   ),

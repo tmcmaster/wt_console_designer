@@ -23,53 +23,92 @@ class ItemCreationPalette extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ...[
-            const PaletteItem(
+            PaletteItem(
               label: 'Icon',
-              type: ItemType.icon,
               icon: FontAwesomeIcons.icons,
-              size: Size(50, 50),
+              item: IconItem(
+                id: '',
+                layout: ItemLayout(
+                  point: const Point(50, 50),
+                  size: const Size(50, 50),
+                  color: Colors.white,
+                ),
+                state: IconItemState(
+                  icon: 'person',
+                ),
+              ),
             ),
-            const PaletteItem(
-              label: 'Toggle',
-              type: ItemType.toggle,
+            PaletteItem(
+              label: 'Switch',
               icon: Icons.toggle_on,
-              size: Size(100, 50),
+              item: SwitchItem(
+                id: '',
+                layout: ItemLayout(
+                  point: const Point(50, 50),
+                  size: const Size(100, 50),
+                  color: Colors.white,
+                ),
+                state: SwitchItemState(
+                  enabled: true,
+                ),
+              ),
             ),
-            const PaletteItem(
+            PaletteItem(
               label: 'Slider',
-              type: ItemType.slider,
               icon: FontAwesomeIcons.listCheck,
-              size: Size(150, 50),
+              item: SliderItem(
+                id: '',
+                layout: ItemLayout(
+                  point: const Point(50, 50),
+                  size: const Size(150, 50),
+                  color: Colors.white,
+                ),
+                state: SliderItemState(
+                  min: 0.0,
+                  max: 1.0,
+                  value: 0.4,
+                ),
+              ),
             ),
-            const PaletteItem(
+            PaletteItem(
               label: 'Info',
-              type: ItemType.info,
               icon: FontAwesomeIcons.info,
-              size: Size(200, 50),
+              item: InfoItem(
+                id: '',
+                layout: ItemLayout(
+                  point: const Point(50, 50),
+                  size: const Size(200, 50),
+                  color: Colors.white,
+                ),
+                state: InfoItemState(
+                  value: ':-)',
+                ),
+              ),
             ),
-            const PaletteItem(
+            PaletteItem(
               label: 'Select',
-              type: ItemType.select,
               icon: Icons.arrow_drop_down,
-              size: Size(150, 100),
+              item: SelectItem(
+                id: '',
+                layout: ItemLayout(
+                  point: const Point(50, 50),
+                  size: const Size(150, 100),
+                  color: Colors.white,
+                ),
+                state: SelectItemState(
+                  options: ['one', 'two', 'three'],
+                  value: 'one',
+                ),
+              ),
             ),
           ]
               .map(
-                (item) => Padding(
+                (palette) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TemplateItem(
-                    label: item.label,
-                    icon: item.icon,
-                    lottie: item.lottie,
-                    item: Item(
-                      id: '',
-                      type: item.type,
-                      highlighted: false,
-                      selected: false,
-                      point: const Point(100, 100),
-                      size: item.size,
-                      color: item.color,
-                    ),
+                    label: palette.label,
+                    icon: palette.icon,
+                    item: palette.item,
                   ),
                 ),
               )

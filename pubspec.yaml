@@ -20,11 +20,18 @@ dependencies:
     git:
       url: git@github.com:tmcmaster/wt_logging.git
   lottie: ^2.1.0
+  dart_mappable: ^1.2.0
+  freezed_annotation: ^2.2.0
+  json_annotation: ^4.7.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  build_runner: ^2.3.3
+  dart_mappable_builder: ^1.2.1
+  freezed: ^2.2.0
+  json_serializable: ^6.5.4
 
 flutter:
   uses-material-design: true

@@ -24,18 +24,18 @@ class ScrollPaneItemWidget extends ConsumerWidget {
     return item == null
         ? Container()
         : Positioned(
-            left: item.point.x.toDouble(),
-            top: item.point.y.toDouble(),
-            width: item.size.width,
-            height: item.size.height,
+            left: item.layout.point.x.toDouble(),
+            top: item.layout.point.y.toDouble(),
+            width: item.layout.size.width,
+            height: item.layout.size.height,
             child: Container(
               decoration: BoxDecoration(
-                border: item.selected
+                border: item.layout.selected
                     ? Border.all(color: Colors.black, width: 2)
                     : Border.all(color: Colors.grey, width: 1),
-                color: item.color,
+                color: item.layout.color,
                 boxShadow: [
-                  if (item.highlighted)
+                  if (item.layout.highlighted)
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.4),
                       spreadRadius: 10,
@@ -48,13 +48,13 @@ class ScrollPaneItemWidget extends ConsumerWidget {
                   itemListNotifier.bringToFront(item);
                 },
                 onSelect: () {
-                  itemListNotifier.updateItem(item.copyWith(selected: !item.selected));
+                  itemListNotifier.updateItem(item.copyWith(selected: !item.layout.selected));
                 },
                 onResize: (delta) {
                   itemListNotifier.resizeItem(item.id, delta);
                 },
                 onMove: (delta) {
-                  if (item.selected) {
+                  if (item.layout.selected) {
                     itemListNotifier.moveSelected(item.id, delta);
                   }
                   itemListNotifier.moveItem(item.id, delta);
@@ -62,7 +62,8 @@ class ScrollPaneItemWidget extends ConsumerWidget {
                 onFinish: () {
                   itemListNotifier.clearHighlight();
                 },
-                resizeHandleRegion: Rectangle(item.size.width - 20, item.size.height - 20, 20, 20),
+                resizeHandleRegion:
+                    Rectangle(item.layout.size.width - 20, item.layout.size.height - 20, 20, 20),
                 child: Container(
                   // width: double.infinity,
                   // height: double.infinity,

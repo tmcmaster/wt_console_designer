@@ -4,9 +4,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
-import 'package:wt_console_designer/designer/providers/item_widget_factory.dart';
 import 'package:wt_console_designer/designer/providers/selection_provider.dart';
 import 'package:wt_logging/wt_logging.dart';
 

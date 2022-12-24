@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lottie/lottie.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/providers/selection_provider.dart';
@@ -12,13 +11,11 @@ class TemplateItem extends ConsumerWidget {
   final IconData icon;
   final String label;
   final Item item;
-  final String? lottie;
   const TemplateItem({
     Key? key,
     required this.item,
     required this.icon,
     required this.label,
-    this.lottie,
   }) : super(key: key);
 
   @override
@@ -32,32 +29,21 @@ class TemplateItem extends ConsumerWidget {
 
         notifier.create(
           point: Point(details.offset.dx - offset.dx, details.offset.dy - offset.dy),
-          size: item.size,
-          color: item.color,
+          size: item.layout.size,
           type: item.type,
         );
       },
       feedback: Container(
-        color: item.color.withOpacity(0.5),
-        width: item.size.width,
-        height: item.size.height,
-        child: lottie == null
-            ? Icon(icon)
-            : Lottie.asset(
-                lottie!,
-                width: 50,
-                height: 50,
-              ),
+        color: item.layout.color.withOpacity(0.5),
+        width: item.layout.size.width,
+        height: item.layout.size.height,
+        child: Icon(icon),
       ),
       childWhenDragging: Opacity(
         opacity: 0.3,
-        child: lottie == null
-            ? PaletteIcon(icon: icon, label: label)
-            : Lottie.asset(lottie!, animate: true),
+        child: PaletteIcon(icon: icon, label: label),
       ),
-      child: lottie == null
-          ? PaletteIcon(icon: icon, label: label)
-          : Lottie.asset(lottie!, animate: false),
+      child: PaletteIcon(icon: icon, label: label),
     );
   }
 }

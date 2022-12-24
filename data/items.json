@@ -1,0 +1,26 @@
+[
+  {
+    "type": "toggle",
+    "layout": {
+      "left": 10.0,
+      "top": 10.0,
+      "width": 100.0,
+      "height": 50.0
+    },
+    "state": {
+      "enabled": true
+    }
+  },
+  {
+    "type": "icon",
+    "layout": {
+      "left": 10.0,
+      "top": 10.0,
+      "width": 100.0,
+      "height": 50.0
+    },
+    "state": {
+      "icon": ":-)"
+    }
+  }
+]

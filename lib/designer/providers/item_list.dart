@@ -4,14 +4,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
+import 'package:wt_console_designer/designer/models/icon_item.dart';
+import 'package:wt_console_designer/designer/models/info_item.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
-import 'package:wt_console_designer/designer/models/item_type.dart';
+import 'package:wt_console_designer/designer/models/item_layout.dart';
+import 'package:wt_console_designer/designer/models/select_item.dart';
+import 'package:wt_console_designer/designer/models/slider_item.dart';
+import 'package:wt_console_designer/designer/models/switch_item.dart';
 import 'package:wt_console_designer/designer/providers/item_list_json.dart';
 
 final itemCountProvider = Provider((ref) => ref.watch(itemListProvider).length);
 
 final selectedItems = Provider<List<Item>>(
-    (ref) => ref.watch(itemListProvider).where((item) => item.selected).toList());
+    (ref) => ref.watch(itemListProvider).where((item) => item.layout.selected).toList());
 
 final itemProvider = Provider.autoDispose.family<Item?, String>(
   (ref, id) {
@@ -34,50 +39,67 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
   ItemListNotifier(this.ref)
       : super([
-          Item(
-            id: "001",
-            type: ItemType.icon,
-            point: const Point(100, 100),
-            size: const Size(50, 50),
-            color: Colors.white,
-            selected: false,
-            highlighted: false,
-          ),
-          Item(
+          IconItem(
+              id: "001",
+              layout: ItemLayout(
+                point: const Point(100, 100),
+                size: const Size(50, 50),
+                selected: false,
+                highlighted: false,
+              ),
+              state: IconItemState(
+                icon: 'person',
+              )),
+          SwitchItem(
             id: "002",
-            type: ItemType.toggle,
-            point: const Point(200, 200),
-            size: const Size(75, 50),
-            color: Colors.white,
-            selected: false,
-            highlighted: false,
+            layout: ItemLayout(
+              point: const Point(200, 200),
+              size: const Size(75, 50),
+              selected: false,
+              highlighted: false,
+            ),
+            state: SwitchItemState(
+              enabled: true,
+            ),
           ),
-          Item(
+          SliderItem(
             id: "003",
-            type: ItemType.slider,
-            point: const Point(300, 300),
-            size: const Size(200, 50),
-            color: Colors.white,
-            selected: false,
-            highlighted: false,
+            layout: ItemLayout(
+              point: const Point(300, 300),
+              size: const Size(200, 50),
+              selected: false,
+              highlighted: false,
+            ),
+            state: SliderItemState(
+              min: 0.0,
+              max: 1.0,
+              value: 0.3,
+            ),
           ),
-          Item(
+          InfoItem(
             id: "004",
             type: ItemType.info,
-            point: const Point(100, 400),
-            size: const Size(200, 50),
-            color: Colors.white,
-            selected: false,
-            highlighted: false,
+            layout: ItemLayout(
+              point: const Point(100, 400),
+              size: const Size(200, 50),
+              selected: false,
+              highlighted: false,
+            ),
+            state: InfoItemState(value: ':-)'),
           ),
-          Item(
+          SelectItem(
             id: "005",
             type: ItemType.select,
-            point: const Point(100, 500),
-            size: const Size(150, 150),
-            color: Colors.white,
-            selected: false,
-            highlighted: false,
+            layout: ItemLayout(
+              point: const Point(100, 500),
+              size: const Size(150, 150),
+              selected: false,
+              highlighted: false,
+            ),
+            state: SelectItemState(
+              options: ['one', 'two', 'three'],
+              value: 'one',
+            ),
           ),
         ]) {
     Future.delayed(const Duration(milliseconds: 100), () {
@@ -85,10 +107,10 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     });
   }
 
+  // TODO: need to review if this method is needed any more.
   void create({
     Point<double>? point,
     Size? size,
-    Color? color,
     bool? selected,
     bool? highlighted,
     double? aspect,
@@ -96,23 +118,61 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     ItemType? type,
   }) {
     final id = uuid.v1();
-    add(Item(
-      id: id,
-      type: type ?? ItemType.icon,
+    final layout = ItemLayout(
       point: point ?? const Point<double>(10, 10),
       size: size ?? const Size(100, 100),
-      color: color ?? Colors.white,
-      selected: selected ?? false,
-      highlighted: highlighted ?? false,
-      aspect: aspect,
-      resize: resize ?? true,
-    ));
+    );
+    if (type == ItemType.icon) {
+      add(IconItem(
+        id: id,
+        layout: layout,
+        state: IconItemState(
+          icon: 'person',
+        ),
+      ));
+    } else if (type == ItemType.toggle) {
+      add(SwitchItem(
+        id: id,
+        layout: layout,
+        state: SwitchItemState(
+          enabled: true,
+        ),
+      ));
+    } else if (type == ItemType.slider) {
+      add(SliderItem(
+        id: id,
+        layout: layout,
+        state: SliderItemState(
+          min: 0.0,
+          max: 1.0,
+          value: 0.3,
+        ),
+      ));
+    } else if (type == ItemType.info) {
+      add(InfoItem(
+        id: id,
+        layout: layout,
+        state: InfoItemState(
+          value: ':-)',
+        ),
+      ));
+    } else if (type == ItemType.select) {
+      add(SelectItem(
+        id: id,
+        layout: layout,
+        state: SelectItemState(
+          options: ['one', 'two', 'three'],
+          value: 'one',
+        ),
+      ));
+    }
   }
 
   void add(Item newItem) {
+    // TODO: need to move this offset logic to _updateState and then make this function call _updateState.
     final offset = Offset(
-      newItem.point.x < 0 ? newItem.point.x * -1 : 0,
-      newItem.point.y < 0 ? newItem.point.y * -1 : 0,
+      newItem.layout.point.x < 0 ? newItem.layout.point.x * -1 : 0,
+      newItem.layout.point.y < 0 ? newItem.layout.point.y * -1 : 0,
     );
 
     if (offset.dx > 0 || offset.dy > 0) {
@@ -120,16 +180,21 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
       state = [
         ...state
             .map((item) => item.copyWith(
+                  layout: item.layout.copyWith(
                     point: Point(
-                  item.point.x + offset.dx,
-                  item.point.y + offset.dy,
-                )))
+                      item.layout.point.x + offset.dx,
+                      item.layout.point.y + offset.dy,
+                    ),
+                  ),
+                ))
             .toList(),
         newItem.copyWith(
-            point: Point(
-          newItem.point.x + offset.dx,
-          newItem.point.y + offset.dy,
-        )),
+          layout: newItem.layout.copyWith(
+              point: Point(
+            newItem.layout.point.x + offset.dx,
+            newItem.layout.point.y + offset.dy,
+          )),
+        ),
       ];
     } else {
       state = [
@@ -143,20 +208,63 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
   void updateItems(List<Item> items) {
     final itemMap = <String, Item>{for (var item in items) item.id: item};
-    state = state.map((e) => itemMap[e.id] == null ? e : (itemMap[e.id] ?? e)).toList();
+    final newState = state.map((e) => itemMap[e.id] == null ? e : (itemMap[e.id] ?? e)).toList();
+    _updateState(newState, items);
   }
 
   void updateItem(Item newItem) {
-    state = [...state.where((item) => item.id != newItem.id).toList(), newItem];
+    final newState = [...state.where((item) => item.id != newItem.id).toList(), newItem];
+    _updateState(newState, [newItem]);
+  }
+
+  void _updateState(List<Item> newState, List<Item> changedItems) {
+    // TODO: need to check if any of the changedItems are off the left or top of the screen
+    //        if so, find the larges offset for the x and y, and translate all of the items.
+
+    final offset = _findMostLeftTopOffset(changedItems);
+
+    if (offset.dx < 0 || offset.dy < 0) {
+      state = newState.map((item) {
+        Item newItem = item.copyWith(
+          layout: item.layout.copyWith(
+            point: Point(
+              item.layout.point.x + offset.dx,
+              item.layout.point.y + offset.dy,
+            ),
+          ),
+        );
+        return newItem;
+      }).toList();
+    } else {
+      state = newState;
+    }
+  }
+
+  Offset _findMostLeftTopOffset(List<Item> items) {
+    return items.fold(
+        const Offset(0, 0),
+        (offset, item) => Offset(
+              item.layout.point.x < offset.dx ? item.layout.point.x : offset.dx,
+              item.layout.point.y < offset.dy ? item.layout.point.y : offset.dy,
+            ));
   }
 
   void clearSelection() {
-    state = state.map((item) => item.selected ? item.copyWith(selected: false) : item).toList();
+    state = state.map((item) {
+      final Item newItem = item.layout.selected
+          ? item.copyWith(
+              selected: false,
+            )
+          : item;
+      return newItem;
+    }).toList();
   }
 
   void clearHighlight() {
-    state =
-        state.map((item) => item.highlighted ? item.copyWith(highlighted: false) : item).toList();
+    state = state.map((Item item) {
+      final Item newItem = item.layout.highlighted ? item.copyWith() : item;
+      return item;
+    }).toList();
   }
 
   void toggleSelection(Item itemToToggle, {bool clearSelection = false}) {
@@ -165,7 +273,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
           .where((item) => item.id != itemToToggle.id)
           .map((item) => clearSelection ? item.copyWith(selected: false) : item)
           .toList(),
-      itemToToggle.copyWith(selected: !itemToToggle.selected),
+      itemToToggle.copyWith(selected: !itemToToggle.layout.selected),
     ];
   }
 
@@ -181,7 +289,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
   void clear([bool onlySelected = false]) {
     if (onlySelected) {
-      state = state.where((item) => !item.selected).toList();
+      state = state.where((item) => !item.layout.selected).toList();
     } else {
       state = [];
     }
@@ -194,44 +302,45 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   // TODO: need to investigate why intersection seems to be selecting extra items.
   void selectInRegion(Rectangle region) {
     // print('Region(${region.left.toInt()},${region.top.toInt()} : (${region.width.toInt()} x ${region.height.toInt()}))');
-    state = state.map((item) {
-      final isWithin = region.intersection(item.bounds) != null;
-      // print('Compare($isWithin): ${item.type} : Item(${item.point.x.toInt()}, ${item.point.y.toInt()} : (${item.size.width.toInt()} x ${item.size.height.toInt()}))');
-      return isWithin ? item.copyWith(selected: true) : item.copyWith(selected: false);
+    state = state.map((Item item) {
+      final isWithin = region.intersection(item.layout.bounds) != null;
+      final Item newItem =
+          isWithin ? item.copyWith(selected: true) : item.copyWith(selected: false);
+      return newItem;
     }).toList();
   }
 
   bool isWithin(Item item, Rectangle region) {
-    final isBetween = (item.point.x > region.left &&
-        item.point.x < region.right &&
-        item.point.y > region.top &&
-        item.point.y < region.bottom);
+    final isBetween = (item.layout.point.x > region.left &&
+        item.layout.point.x < region.right &&
+        item.layout.point.y > region.top &&
+        item.layout.point.y < region.bottom);
 
     return isBetween;
   }
 
   void horizontalCenterAlign(List<Item> items) {
-    return _align(items, (item) => Offset(item.point.x + (item.size.width / 2), 0));
+    return _align(items, (item) => Offset(item.layout.point.x + (item.layout.size.width / 2), 0));
   }
 
   void leftAlign(List<Item> items) {
-    return _align(items, (item) => Offset(item.point.x.toDouble(), 0));
+    return _align(items, (item) => Offset(item.layout.point.x.toDouble(), 0));
   }
 
   void rightAlign(List<Item> items) {
-    return _align(items, (item) => Offset(item.point.x + item.size.width, 0));
+    return _align(items, (item) => Offset(item.layout.point.x + item.layout.size.width, 0));
   }
 
   void verticalCenterAlign(List<Item> items) {
-    return _align(items, (item) => Offset(0, item.point.y + (item.size.height / 2)));
+    return _align(items, (item) => Offset(0, item.layout.point.y + (item.layout.size.height / 2)));
   }
 
   void topAlign(List<Item> items) {
-    return _align(items, (item) => Offset(0, item.point.y.toDouble()));
+    return _align(items, (item) => Offset(0, item.layout.point.y.toDouble()));
   }
 
   void bottomAlign(List<Item> items) {
-    return _align(items, (item) => Offset(0, item.point.y + item.size.height));
+    return _align(items, (item) => Offset(0, item.layout.point.y + item.layout.size.height));
   }
 
   void _align(List<Item> items, Offset Function(Item) getValue) {
@@ -241,16 +350,17 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     }
     final firstItem = items[0];
     final requiredValue = getValue(firstItem);
-    final updatedItems = items.sublist(1).map((item) {
+    final List<Item> updatedItems = items.sublist(1).map((item) {
       final value = getValue(item);
       final offset = requiredValue - value;
       // print('RequiredCenter($requiredCenter), Center($center), Delta($offset)');
-      return item.copyWith(
+      final Item newItem = item.copyWith(
         point: Point(
-          item.point.x + offset.dx,
-          item.point.y + offset.dy,
+          item.layout.point.x + offset.dx,
+          item.layout.point.y + offset.dy,
         ),
       );
+      return newItem;
     }).toList();
     updateItems(updatedItems);
   }
@@ -263,43 +373,50 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   }
 
   void resizeItem(String id, Offset delta) {
-    state = state
-        .map((item) => item.id != id
-            ? item
-            : item.copyWith(
+    state = state.map((item) {
+      final Item newItem = item.id != id
+          ? item
+          : item.copyWith(
+              layout: item.layout.copyWith(
                 size: Size(
-                  item.size.width + delta.dx,
-                  item.size.height + delta.dy,
+                  item.layout.size.width + delta.dx,
+                  item.layout.size.height + delta.dy,
                 ),
-              ))
-        .toList();
+              ),
+            );
+      return newItem;
+    }).toList();
   }
 
   void moveItem(String id, Offset delta) {
-    state = state
-        .map((item) => item.id != id
-            ? item
-            : item.copyWith(
+    state = state.map((Item item) {
+      final Item newItem = item.id != id
+          ? item
+          : item.copyWith(
+              layout: item.layout.copyWith(
                 point: Point(
-                  item.point.x + delta.dx,
-                  item.point.y + delta.dy,
+                  item.layout.point.x + delta.dx,
+                  item.layout.point.y + delta.dy,
                 ),
                 highlighted: true,
-              ))
-        .toList();
+              ),
+            );
+      return newItem;
+    }).toList();
   }
 
   void moveSelected(String id, Offset delta) {
-    state = state
-        .map((item) => item.id == id || !item.selected
-            ? item
-            : item.copyWith(
-                point: Point(
-                  item.point.x + delta.dx,
-                  item.point.y + delta.dy,
-                ),
-                highlighted: true,
-              ))
-        .toList();
+    state = state.map((item) {
+      final Item newItem = item.id == id || !item.layout.selected
+          ? item
+          : item.copyWith(
+              point: Point(
+                item.layout.point.x + delta.dx,
+                item.layout.point.y + delta.dy,
+              ),
+              highlighted: true,
+            );
+      return newItem;
+    }).toList();
   }
 }

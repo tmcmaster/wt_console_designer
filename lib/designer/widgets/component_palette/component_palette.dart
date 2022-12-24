@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:wt_console_designer/designer/models/icon_item.dart';
+import 'package:wt_console_designer/designer/models/info_item.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
-import 'package:wt_console_designer/designer/models/item_type.dart';
+import 'package:wt_console_designer/designer/models/item_layout.dart';
 import 'package:wt_console_designer/designer/models/palette_item.dart';
+import 'package:wt_console_designer/designer/models/select_item.dart';
+import 'package:wt_console_designer/designer/models/slider_item.dart';
+import 'package:wt_console_designer/designer/models/switch_item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/widgets/component_palette/template_item.dart';
 
