@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/models/item_layout.dart';
@@ -9,9 +10,23 @@ part 'icon_item.g.dart';
 class IconItemState with _$IconItemState {
   IconItemState._();
   factory IconItemState({
-    required String icon,
+    @JsonKey(name: 'icon', fromJson: IconItemState.iconFromJson, toJson: IconItemState.iconToJson)
+    @Default(Icons.person)
+        IconData icon,
   }) = _IconItemState;
+
   factory IconItemState.fromJson(Map<String, Object?> json) => _$IconItemStateFromJson(json);
+
+  static IconData iconFromJson(Map<String, dynamic> map) {
+    return IconData(map['codePoint'], fontFamily: map['fontFamily']);
+  }
+
+  static Map<String, dynamic> iconToJson(IconData icon) {
+    return {
+      'codePoint': icon.codePoint,
+      'fontFamily': icon.fontFamily,
+    };
+  }
 }
 
 @freezed

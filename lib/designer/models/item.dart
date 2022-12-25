@@ -39,6 +39,10 @@ abstract class Item<T> {
     return jsonList.map((map) => Item.fromJson(map)).toList();
   }
 
+  static Map<String, dynamic> toJson2(Item item) {
+    return item.toJson();
+  }
+
   Map<String, dynamic> toJson();
 
   T get copyWith;

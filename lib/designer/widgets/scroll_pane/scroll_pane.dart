@@ -17,7 +17,7 @@ part 'scroll_pane_selection_box.dart';
 part 'scroll_pane_state.dart';
 
 class ScrollPane extends ConsumerWidget {
-  static final log = logger(ScrollPane, level: Level.verbose);
+  static final log = logger(ScrollPane, level: Level.warning);
   final _key = GlobalKey();
 
   final bool panEnabled;

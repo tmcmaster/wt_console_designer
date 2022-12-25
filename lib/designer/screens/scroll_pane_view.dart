@@ -6,7 +6,7 @@ import 'package:wt_console_designer/designer/widgets/scroll_pane/scroll_pane.dar
 import 'package:wt_logging/wt_logging.dart';
 
 class ScrollPaneView extends ConsumerWidget {
-  static final log = logger(ScrollPaneView, level: Level.verbose);
+  static final log = logger(ScrollPaneView, level: Level.warning);
 
   const ScrollPaneView({super.key});
 

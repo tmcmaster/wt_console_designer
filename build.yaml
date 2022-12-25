@@ -1,6 +1,13 @@
+#targets:
+#  $default:
+#    builders:
+#      dart_mappable_builder:
+#        generate_for:
+#          - lib/polymorphism/main.dart # modify this if you have a different entry point
+
 targets:
   $default:
     builders:
-      dart_mappable_builder:
-        generate_for:
-          - lib/polymorphism/main.dart # modify this if you have a different entry point
+      json_serializable:
+        options:
+          explicit_to_json: true

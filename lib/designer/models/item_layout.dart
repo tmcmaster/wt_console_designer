@@ -33,7 +33,7 @@ class ItemLayout with _$ItemLayout {
   static Point<double> pointFromJson(Map<String, dynamic> map) {
     return Point<double>(
       map['x'] ?? 0.0,
-      map['x'] ?? 0.0,
+      map['y'] ?? 0.0,
     );
   }
 

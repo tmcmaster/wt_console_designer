@@ -4,8 +4,10 @@ import 'package:wt_console_designer/designer/widgets/component_palette/component
 import 'package:wt_console_designer/designer/widgets/header_toolbar.dart';
 import 'package:wt_logging/wt_logging.dart';
 
-class HomeScreen extends StatelessWidget {
-  static final log = logger(HomeScreen, level: Level.verbose);
+class HomeView extends StatelessWidget {
+  static final log = logger(HomeView, level: Level.warning);
+
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {

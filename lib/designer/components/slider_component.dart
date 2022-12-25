@@ -3,10 +3,10 @@ import 'package:wt_console_designer/designer/models/slider_item.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 class SliderComponent extends StatelessWidget {
-  static final log = logger(SliderComponent, level: Level.verbose);
-  final SliderItemState state;
+  static final log = logger(SliderComponent, level: Level.warning);
+  final SliderItem item;
   const SliderComponent(
-    this.state, {
+    this.item, {
     super.key,
   });
 
@@ -14,9 +14,9 @@ class SliderComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     log.v('Building Widget');
     return Slider(
-      min: state.min,
-      max: state.max,
-      value: state.value,
+      min: item.state.min,
+      max: item.state.max,
+      value: item.state.value,
       onChanged: (double value) {},
     );
   }

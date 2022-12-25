@@ -48,7 +48,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
                 highlighted: false,
               ),
               state: IconItemState(
-                icon: 'person',
+                icon: Icons.abc,
               )),
           SwitchItem(
             id: "002",
@@ -103,69 +103,18 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
           ),
         ]) {
     Future.delayed(const Duration(milliseconds: 100), () {
-      save();
-    });
-  }
+      try {
+        print('=====================================');
+        final map = state[0].toJson();
+        print(map);
+        print(IconItem.fromJson(map));
 
-  // TODO: need to review if this method is needed any more.
-  void create({
-    Point<double>? point,
-    Size? size,
-    bool? selected,
-    bool? highlighted,
-    double? aspect,
-    bool? resize,
-    ItemType? type,
-  }) {
-    final id = uuid.v1();
-    final layout = ItemLayout(
-      point: point ?? const Point<double>(10, 10),
-      size: size ?? const Size(100, 100),
-    );
-    if (type == ItemType.icon) {
-      add(IconItem(
-        id: id,
-        layout: layout,
-        state: IconItemState(
-          icon: 'person',
-        ),
-      ));
-    } else if (type == ItemType.toggle) {
-      add(SwitchItem(
-        id: id,
-        layout: layout,
-        state: SwitchItemState(
-          enabled: true,
-        ),
-      ));
-    } else if (type == ItemType.slider) {
-      add(SliderItem(
-        id: id,
-        layout: layout,
-        state: SliderItemState(
-          min: 0.0,
-          max: 1.0,
-          value: 0.3,
-        ),
-      ));
-    } else if (type == ItemType.info) {
-      add(InfoItem(
-        id: id,
-        layout: layout,
-        state: InfoItemState(
-          value: ':-)',
-        ),
-      ));
-    } else if (type == ItemType.select) {
-      add(SelectItem(
-        id: id,
-        layout: layout,
-        state: SelectItemState(
-          options: ['one', 'two', 'three'],
-          value: 'one',
-        ),
-      ));
-    }
+        print('=====================================');
+        save();
+      } catch (error) {
+        print(error);
+      }
+    });
   }
 
   void add(Item newItem) {

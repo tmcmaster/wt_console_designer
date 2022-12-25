@@ -1,7 +1,7 @@
 part of 'scroll_pane.dart';
 
 class ScrollPaneItemWidget extends ConsumerWidget {
-  static final log = logger(ScrollPaneItemWidget, level: Level.verbose);
+  static final log = logger(ScrollPaneItemWidget, level: Level.warning);
 
   static const debug = false;
 

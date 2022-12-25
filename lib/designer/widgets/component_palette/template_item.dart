@@ -2,12 +2,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
 import 'package:wt_console_designer/designer/providers/item_list.dart';
 import 'package:wt_console_designer/designer/providers/selection_provider.dart';
 import 'package:wt_console_designer/designer/widgets/palette_icon.dart';
 
 class TemplateItem extends ConsumerWidget {
+  static const uuid = Uuid();
+
   final IconData icon;
   final String label;
   final Item item;
@@ -27,11 +30,15 @@ class TemplateItem extends ConsumerWidget {
         final box = stackKey.currentContext?.findRenderObject() as RenderBox;
         final offset = box.localToGlobal(Offset.zero);
 
-        notifier.create(
-          point: Point(details.offset.dx - offset.dx, details.offset.dy - offset.dy),
-          size: item.layout.size,
-          type: item.type,
-        );
+        notifier.add(item.copyWith(
+          id: uuid.v1(),
+          layout: item.layout.copyWith(
+            point: Point(
+              details.offset.dx - offset.dx,
+              details.offset.dy - offset.dy,
+            ),
+          ),
+        ));
       },
       feedback: Container(
         color: item.layout.color.withOpacity(0.5),

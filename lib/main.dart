@@ -34,7 +34,7 @@ class ConsoleDesignerApp extends StatelessWidget {
       //       ),
       // darkTheme: _testParabeacThemes ? FlutterThemesTheme.themeDataDark : ThemeData.dark(),
       // home: const TestApp(),
-      home: HomeScreen(),
+      home: HomeView(),
       // home: const ScrollPaneView(),
     );
   }
@@ -54,7 +54,7 @@ class TestApp extends StatelessWidget {
         height: double.infinity,
         child: Container(
           padding: const EdgeInsets.all(50),
-          child: HomeScreen(),
+          child: HomeView(),
         ),
       ),
     );

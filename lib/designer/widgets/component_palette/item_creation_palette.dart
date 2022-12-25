@@ -34,7 +34,7 @@ class ItemCreationPalette extends StatelessWidget {
                   color: Colors.white,
                 ),
                 state: IconItemState(
-                  icon: 'person',
+                  icon: Icons.person,
                 ),
               ),
             ),
