@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "316517793078",
+    "firebase_url": "https://wt-console-designer-default-rtdb.firebaseio.com",
+    "project_id": "wt-console-designer",
+    "storage_bucket": "wt-console-designer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316517793078:android:b80b094e4b0de8609a0797",
+        "android_client_info": {
+          "package_name": "net.wonkytech.wt_console_designer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316517793078-d1o2nmfmc3d3m553necs1761ut6enbe2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuIwGVJW463qi0mUt8cVYF3ppPeQINm9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316517793078-d1o2nmfmc3d3m553necs1761ut6enbe2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

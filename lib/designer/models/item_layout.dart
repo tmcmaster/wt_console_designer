@@ -32,8 +32,8 @@ class ItemLayout with _$ItemLayout {
 
   static Point<double> pointFromJson(Map<String, dynamic> map) {
     return Point<double>(
-      map['x'] ?? 0.0,
-      map['y'] ?? 0.0,
+      ((map['x'] ?? 0.0) as num).toDouble(),
+      ((map['y'] ?? 0.0) as num).toDouble(),
     );
   }
 
@@ -46,8 +46,8 @@ class ItemLayout with _$ItemLayout {
 
   static Size sizeFromJson(Map<String, dynamic> map) {
     return Size(
-      map['width'] ?? 0.0,
-      map['height'] ?? 0.0,
+      ((map['width'] ?? 0.0) as num).toDouble(),
+      ((map['height'] ?? 0.0) as num).toDouble() ?? 0.0,
     );
   }
 

@@ -12,6 +12,7 @@ import 'package:wt_console_designer/designer/models/select_item.dart';
 import 'package:wt_console_designer/designer/models/slider_item.dart';
 import 'package:wt_console_designer/designer/models/switch_item.dart';
 import 'package:wt_console_designer/designer/providers/item_list_json.dart';
+import 'package:wt_firepod/wt_firepod.dart';
 
 final itemCountProvider = Provider((ref) => ref.watch(itemListProvider).length);
 
@@ -231,11 +232,81 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   void load() {
     final itemListJson = ref.read(itemListJsonProvider);
     state = itemListJson.map((map) => Item.fromJson(map)).toList();
+
+    ref.read(FirebaseProviders.database).ref('/v1/state').get().then((snapshot) {
+      if (snapshot.exists) {
+        final List<Map<String, dynamic>> itemListJson =
+            firebaseMapListToJsonMapList(snapshot.value);
+
+        state = Item.fromJsonList(itemListJson);
+      }
+    });
+  }
+
+  List<Map<String, dynamic>> firebaseMapListToJsonMapList(Object? object) {
+    if (object is List<Object?>) {
+      return object.map((obj) {
+        final ooo = obj as Map<Object?, Object?>;
+        return Map.fromEntries(ooo.entries
+            .map((e) => MapEntry(e.key.toString(), firebaseObjectToJson(e.value)))
+            .toList());
+      }).toList();
+    } else {
+      return [];
+    }
+  }
+
+  dynamic firebaseObjectToJson(Object? object) {
+    if (object == null) {
+      return null;
+    } else if (object is List<Object?>) {
+      return object.map((o) => firebaseObjectToJson(o)).toList();
+    } else if (object is Map<Object?, Object?>) {
+      return Map.fromEntries(
+          object.entries.map((e) => MapEntry(e.key.toString(), firebaseObjectToJson(e.value))));
+    } else {
+      return object;
+    }
+  }
+
+  List<Map<String, dynamic>> firebaseListToJson(Object? data) {
+    if (data == null) {
+      return [];
+    }
+
+    if (data is List<Object?>) {
+      return data.map((e) => firebaseMapToJson(e)).toList();
+    }
+
+    return [];
+  }
+
+  Map<String, dynamic> firebaseMapToJson(Object? object) {
+    if (object == null) {
+      return {};
+    }
+
+    final map = object as Map<Object?, Object?>;
+
+    return Map.fromEntries(map.entries.map((e) => MapEntry(e.key.toString(), e.value)));
   }
 
   void save() {
-    final json = state.map((item) => item.toJson()).toList();
-    ref.read(itemListJsonProvider.notifier).update(json);
+    ref
+        .read(FirebaseProviders.auth)
+        .signInWithEmailAndPassword(email: 'tim@wonkytech.net', password: 'LetMeInPlease')
+        .then((value) {
+      print('Database: ${ref.read(FirebaseProviders.database).app.name}');
+      final json = state.map((item) => item.toJson()).toList();
+      ref.read(itemListJsonProvider.notifier).update(json);
+      ref.read(FirebaseProviders.database).ref('/v1/state').set(json);
+
+      ref
+          .read(FirebaseProviders.database)
+          .ref('/v1/state')
+          .get()
+          .then((snapshot) => print('===>> State: ${snapshot.value}'));
+    });
   }
 
   void clear([bool onlySelected = false]) {

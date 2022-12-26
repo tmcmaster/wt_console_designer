@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_app_scaffold/app_scaffolds.dart';
 import 'package:wt_console_designer/designer/screens/home_view.dart';
+import 'package:wt_console_designer/firebase_options.dart';
+import 'package:wt_firepod/wt_firepod.dart';
 import 'package:wt_logging/wt_logging.dart';
 
+// void main() async {
+//   runApp(
+//     const ProviderScope(
+//       child: ConsoleDesignerApp(),
+//     ),
+//   );
+// }
+
 void main() async {
-  runApp(
-    const ProviderScope(
-      child: ConsoleDesignerApp(),
+  runMyApp(
+    withFirebase(
+      (app, firebaseOptions) async {
+        return const ProviderScope(
+          child: ConsoleDesignerApp(),
+        );
+      },
+      appName: 'wt-console-designer',
+      firebaseOptions: DefaultFirebaseOptions.currentPlatform,
     ),
   );
 }

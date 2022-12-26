@@ -16,13 +16,20 @@ dependencies:
   uuid:
   flutter_colorpicker: ^1.0.3
   font_awesome_flutter:
-  wt_logging:
-    git:
-      url: git@github.com:tmcmaster/wt_logging.git
   lottie: ^2.1.0
   dart_mappable: ^1.2.0
   freezed_annotation: ^2.2.0
   json_annotation: ^4.7.0
+
+  wt_firepod:
+    git:
+      url: git@github.com:tmcmaster/wt_firepod.git
+  wt_logging:
+    git:
+      url: git@github.com:tmcmaster/wt_logging.git
+  wt_app_scaffold:
+    git:
+      url: https://github.com/tmcmaster/wt_app_scaffold.git
 
 dev_dependencies:
   flutter_test:
