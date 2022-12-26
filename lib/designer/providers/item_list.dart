@@ -4,14 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wt_console_designer/designer/models/icon_item.dart';
-import 'package:wt_console_designer/designer/models/info_item.dart';
 import 'package:wt_console_designer/designer/models/item.dart';
-import 'package:wt_console_designer/designer/models/item_layout.dart';
-import 'package:wt_console_designer/designer/models/select_item.dart';
-import 'package:wt_console_designer/designer/models/slider_item.dart';
-import 'package:wt_console_designer/designer/models/switch_item.dart';
-import 'package:wt_console_designer/designer/providers/item_list_json.dart';
 import 'package:wt_firepod/wt_firepod.dart';
 
 final itemCountProvider = Provider((ref) => ref.watch(itemListProvider).length);
@@ -38,80 +31,10 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
   final Ref ref;
 
-  ItemListNotifier(this.ref)
-      : super([
-          IconItem(
-              id: "001",
-              layout: ItemLayout(
-                point: const Point(100, 100),
-                size: const Size(50, 50),
-                selected: false,
-                highlighted: false,
-              ),
-              state: IconItemState(
-                icon: Icons.abc,
-              )),
-          SwitchItem(
-            id: "002",
-            layout: ItemLayout(
-              point: const Point(200, 200),
-              size: const Size(75, 50),
-              selected: false,
-              highlighted: false,
-            ),
-            state: SwitchItemState(
-              enabled: true,
-            ),
-          ),
-          SliderItem(
-            id: "003",
-            layout: ItemLayout(
-              point: const Point(300, 300),
-              size: const Size(200, 50),
-              selected: false,
-              highlighted: false,
-            ),
-            state: SliderItemState(
-              min: 0.0,
-              max: 1.0,
-              value: 0.3,
-            ),
-          ),
-          InfoItem(
-            id: "004",
-            type: ItemType.info,
-            layout: ItemLayout(
-              point: const Point(100, 400),
-              size: const Size(200, 50),
-              selected: false,
-              highlighted: false,
-            ),
-            state: InfoItemState(value: ':-)'),
-          ),
-          SelectItem(
-            id: "005",
-            type: ItemType.select,
-            layout: ItemLayout(
-              point: const Point(100, 500),
-              size: const Size(150, 150),
-              selected: false,
-              highlighted: false,
-            ),
-            state: SelectItemState(
-              options: ['one', 'two', 'three'],
-              value: 'one',
-            ),
-          ),
-        ]) {
+  ItemListNotifier(this.ref) : super([]) {
     Future.delayed(const Duration(milliseconds: 100), () {
       try {
-        print('=====================================');
-        final map = state[0].toJson();
-        print(map);
-        print(IconItem.fromJson(map));
-
-        print('=====================================');
-        save();
+        load();
       } catch (error) {
         print(error);
       }
@@ -162,9 +85,12 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     _updateState(newState, items);
   }
 
-  void updateItem(Item newItem) {
+  void updateItem(Item newItem, {bool save = false}) {
     final newState = [...state.where((item) => item.id != newItem.id).toList(), newItem];
     _updateState(newState, [newItem]);
+    if (save) {
+      this.save();
+    }
   }
 
   void _updateState(List<Item> newState, List<Item> changedItems) {
@@ -230,13 +156,15 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   }
 
   void load() {
-    final itemListJson = ref.read(itemListJsonProvider);
-    state = itemListJson.map((map) => Item.fromJson(map)).toList();
+    // final itemListJson = ref.read(itemListJsonProvider);
+    // state = itemListJson.map((map) => Item.fromJson(map)).toList();
 
     ref.read(FirebaseProviders.database).ref('/v1/state').get().then((snapshot) {
       if (snapshot.exists) {
         final List<Map<String, dynamic>> itemListJson =
             firebaseMapListToJsonMapList(snapshot.value);
+
+        print('Items: ${itemListJson.length}');
 
         state = Item.fromJsonList(itemListJson);
       }
@@ -292,21 +220,23 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   }
 
   void save() {
-    ref
-        .read(FirebaseProviders.auth)
-        .signInWithEmailAndPassword(email: 'tim@wonkytech.net', password: 'LetMeInPlease')
-        .then((value) {
-      print('Database: ${ref.read(FirebaseProviders.database).app.name}');
-      final json = state.map((item) => item.toJson()).toList();
-      ref.read(itemListJsonProvider.notifier).update(json);
-      ref.read(FirebaseProviders.database).ref('/v1/state').set(json);
+    // ref
+    //     .read(FirebaseProviders.auth)
+    //     .signInWithEmailAndPassword(email: 'tim@wonkytech.net', password: 'LetMeInPlease')
+    //     .then((value) {
+    //   print('Database: ${ref.read(FirebaseProviders.database).app.name}');
+    //
 
-      ref
-          .read(FirebaseProviders.database)
-          .ref('/v1/state')
-          .get()
-          .then((snapshot) => print('===>> State: ${snapshot.value}'));
-    });
+    final json = state.map((item) => item.toJson()).toList();
+    // ref.read(itemListJsonProvider.notifier).update(json);
+    ref.read(FirebaseProviders.database).ref('/v1/state').set(json);
+
+    // ref
+    //     .read(FirebaseProviders.database)
+    //     .ref('/v1/state')
+    //     .get()
+    //     .then((snapshot) => print('===>> State: ${snapshot.value}'));
+    // });
   }
 
   void clear([bool onlySelected = false]) {

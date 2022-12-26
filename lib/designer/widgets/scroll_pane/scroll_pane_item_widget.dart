@@ -76,7 +76,9 @@ class ScrollPaneItemWidget extends ConsumerWidget {
                   child: IgnorePointer(
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: FittedBox(
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: double.infinity,
                         child: child,
                       ),
                     ),
