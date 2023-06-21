@@ -56,7 +56,7 @@ class ScrollPane extends ConsumerWidget {
                   height: double.infinity,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      fit: BoxFit.fill,
+                      repeat: ImageRepeat.repeat,
                       image: AssetImage('assets/paper-texture.png'),
                       // repeat: ImageRepeat.repeat,
                     ),
