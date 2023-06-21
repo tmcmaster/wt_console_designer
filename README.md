@@ -1,11 +1,22 @@
-# wt_console_designer
-Designer for creating consoles.
+# WT Console Designer
+
+Designer for creating consoles that can control other things.
+
+This project is about testing the idea of designing a console that can then be used to communication 
+with a background service on a machine somewhere, that can be controlled with the console.
+
+This project is incomplete, and so far has only tested the creating the console portion. 
+
+- Items can be dragged in from the tool bar on the left
+- long press to select and long press on the canvas to drag select and area
+- items, included selected groups, can be dragged around, aligned and deleted.
+- 
+The console automatically updates, as the design screen is updated.
 
 ## Build Web
 
 ```bash
-flutter build web --release  --base-href '/wt_console_designer/'
-rsync -va build/web/ docs/ --delete
+flutter build web -o ./docs --base-href '/wt_console_designer/' --target lib/apps/demo_app.dart --no-tree-shake-icons
 ```
 
 ## Control screen brightness
