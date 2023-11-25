@@ -9,8 +9,8 @@ import 'package:wt_firepod/wt_firepod.dart';
 
 final itemCountProvider = Provider((ref) => ref.watch(itemListProvider).length);
 
-final selectedItems = Provider<List<Item>>(
-    (ref) => ref.watch(itemListProvider).where((item) => item.layout.selected).toList());
+final selectedItems = Provider<List<Item>>((ref) =>
+    ref.watch(itemListProvider).where((item) => item.layout.selected).toList());
 
 final itemProvider = Provider.autoDispose.family<Item?, String>(
   (ref, id) {
@@ -81,12 +81,17 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
   void updateItems(List<Item> items) {
     final itemMap = <String, Item>{for (var item in items) item.id: item};
-    final newState = state.map((e) => itemMap[e.id] == null ? e : (itemMap[e.id] ?? e)).toList();
+    final newState = state
+        .map((e) => itemMap[e.id] == null ? e : (itemMap[e.id] ?? e))
+        .toList();
     _updateState(newState, items);
   }
 
   void updateItem(Item newItem, {bool save = false}) {
-    final newState = [...state.where((item) => item.id != newItem.id).toList(), newItem];
+    final newState = [
+      ...state.where((item) => item.id != newItem.id).toList(),
+      newItem
+    ];
     _updateState(newState, [newItem]);
     if (save) {
       this.save();
@@ -141,7 +146,7 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   void clearHighlight() {
     state = state.map((Item item) {
       final Item newItem = item.layout.highlighted ? item.copyWith() : item;
-      return item;
+      return newItem;
     }).toList();
   }
 
@@ -159,7 +164,11 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     // final itemListJson = ref.read(itemListJsonProvider);
     // state = itemListJson.map((map) => Item.fromJson(map)).toList();
 
-    ref.read(FirebaseProviders.database).ref('/v1/state').get().then((snapshot) {
+    ref
+        .read(FirebaseProviders.database)
+        .ref('/v1/state')
+        .get()
+        .then((snapshot) {
       if (snapshot.exists) {
         final List<Map<String, dynamic>> itemListJson =
             firebaseMapListToJsonMapList(snapshot.value);
@@ -176,7 +185,8 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
       return object.map((obj) {
         final ooo = obj as Map<Object?, Object?>;
         return Map.fromEntries(ooo.entries
-            .map((e) => MapEntry(e.key.toString(), firebaseObjectToJson(e.value)))
+            .map((e) =>
+                MapEntry(e.key.toString(), firebaseObjectToJson(e.value)))
             .toList());
       }).toList();
     } else {
@@ -190,8 +200,8 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
     } else if (object is List<Object?>) {
       return object.map((o) => firebaseObjectToJson(o)).toList();
     } else if (object is Map<Object?, Object?>) {
-      return Map.fromEntries(
-          object.entries.map((e) => MapEntry(e.key.toString(), firebaseObjectToJson(e.value))));
+      return Map.fromEntries(object.entries.map(
+          (e) => MapEntry(e.key.toString(), firebaseObjectToJson(e.value))));
     } else {
       return object;
     }
@@ -216,7 +226,8 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
 
     final map = object as Map<Object?, Object?>;
 
-    return Map.fromEntries(map.entries.map((e) => MapEntry(e.key.toString(), e.value)));
+    return Map.fromEntries(
+        map.entries.map((e) => MapEntry(e.key.toString(), e.value)));
   }
 
   void save() {
@@ -281,7 +292,10 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   }
 
   void horizontalCenterAlign(List<Item> items) {
-    return _align(items, (item) => Offset(item.layout.point.x + (item.layout.size.width / 2), 0));
+    return _align(
+        items,
+        (item) =>
+            Offset(item.layout.point.x + (item.layout.size.width / 2), 0));
   }
 
   void leftAlign(List<Item> items) {
@@ -289,11 +303,15 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   }
 
   void rightAlign(List<Item> items) {
-    return _align(items, (item) => Offset(item.layout.point.x + item.layout.size.width, 0));
+    return _align(items,
+        (item) => Offset(item.layout.point.x + item.layout.size.width, 0));
   }
 
   void verticalCenterAlign(List<Item> items) {
-    return _align(items, (item) => Offset(0, item.layout.point.y + (item.layout.size.height / 2)));
+    return _align(
+        items,
+        (item) =>
+            Offset(0, item.layout.point.y + (item.layout.size.height / 2)));
   }
 
   void topAlign(List<Item> items) {
@@ -301,7 +319,8 @@ class ItemListNotifier extends StateNotifier<List<Item>> {
   }
 
   void bottomAlign(List<Item> items) {
-    return _align(items, (item) => Offset(0, item.layout.point.y + item.layout.size.height));
+    return _align(items,
+        (item) => Offset(0, item.layout.point.y + item.layout.size.height));
   }
 
   void _align(List<Item> items, Offset Function(Item) getValue) {

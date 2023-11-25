@@ -1,18 +1,14 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_app_scaffold/app_scaffolds.dart';
 import 'package:wt_console_designer/designer/screens/console_view.dart';
 import 'package:wt_console_designer/designer/screens/home_view.dart';
 import 'package:wt_console_designer/firebase_options.dart';
-import 'package:wt_firepod/wt_firepod.dart';
 
 void main() async {
   runMyApp(
     withFirebase(
-      (_, __) async {
-        return const ProviderScope(child: DemoApp());
-      },
+      asPlainApp(const DemoApp()),
       appName: 'wt-console-designer',
       firebaseOptions: DefaultFirebaseOptions.currentPlatform,
     ),
@@ -153,7 +149,6 @@ class ScaffoldApp extends StatelessWidget {
       body: DevicePreview(
         builder: (context) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          useInheritedMediaQuery: true,
           home: Scaffold(
             body: child,
           ),

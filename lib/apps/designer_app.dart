@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wt_app_scaffold/app_scaffolds.dart';
+import 'package:wt_app_scaffold/models/app_styles.dart';
 import 'package:wt_console_designer/designer/screens/home_view.dart';
 import 'package:wt_console_designer/firebase_options.dart';
-import 'package:wt_firepod/wt_firepod.dart';
 
 void main() async {
   runMyApp(
@@ -12,9 +12,7 @@ void main() async {
       andAppScaffold(
         appDefinition: appDefinitionProvider,
         appDetails: appDetailsProvider,
-        loginSupport: const LoginSupport(
-          emailEnabled: true,
-        ),
+        appStyles: appStyles,
       ),
       appName: 'wt-console-designer',
       firebaseOptions: DefaultFirebaseOptions.currentPlatform,
@@ -28,16 +26,19 @@ final appDefinitionProvider = Provider<AppDefinition>(
     appName: 'Console Designer',
     appTitle: 'Console Designer',
     appDetailsProvider: appDetailsProvider,
+    swipeEnabled: false,
     pages: [
       PageDefinition(
         title: 'Designer',
         icon: FontAwesomeIcons.desktop,
-        builder: (_) => const HomeView(),
+        builder: (_, __, ___) => const HomeView(),
+        primary: true,
       ),
       PageDefinition(
         title: 'Settings',
         icon: Icons.settings,
-        builder: (_) => const SettingsPage(),
+        builder: (_, __, ___) => const SettingsPage(),
+        primary: true,
       )
     ],
   ),
@@ -50,4 +51,9 @@ final appDetailsProvider = Provider(
     subTitle: 'Create and configure consoles',
     iconPath: 'assets/icon.png',
   ),
+);
+
+final appStyles = Provider(
+  name: 'AppStyles',
+  (ref) => AppStyles(),
 );

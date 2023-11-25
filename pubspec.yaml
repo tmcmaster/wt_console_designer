@@ -23,10 +23,10 @@ dependencies:
 
   wt_firepod:
     git:
-      url: git@github.com:tmcmaster/wt_firepod.git
+      url: https://github.com/tmcmaster/wt_firepod.git
   wt_logging:
     git:
-      url: git@github.com:tmcmaster/wt_logging.git
+      url: https://github.com/tmcmaster/wt_logging.git
   wt_app_scaffold:
     git:
       url: https://github.com/tmcmaster/wt_app_scaffold.git

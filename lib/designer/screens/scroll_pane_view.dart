@@ -72,6 +72,5 @@ class TestWidget extends StatelessWidget {
               ))
           .toList(),
     );
-    ;
   }
 }
