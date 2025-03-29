@@ -10,12 +10,16 @@ part 'icon_item.g.dart';
 class IconItemState with _$IconItemState {
   IconItemState._();
   factory IconItemState({
-    @JsonKey(name: 'icon', fromJson: IconItemState.iconFromJson, toJson: IconItemState.iconToJson)
+    @JsonKey(
+        name: 'icon',
+        fromJson: IconItemState.iconFromJson,
+        toJson: IconItemState.iconToJson)
     @Default(Icons.person)
-        IconData icon,
+    IconData icon,
   }) = _IconItemState;
 
-  factory IconItemState.fromJson(Map<String, Object?> json) => _$IconItemStateFromJson(json);
+  factory IconItemState.fromJson(Map<String, Object?> json) =>
+      _$IconItemStateFromJson(json);
 
   static IconData iconFromJson(Map<String, dynamic> map) {
     return IconData(map['codePoint'], fontFamily: map['fontFamily']);
@@ -30,7 +34,7 @@ class IconItemState with _$IconItemState {
 }
 
 @freezed
-class IconItem with _$IconItem, Item<$IconItemCopyWith<IconItem>> {
+class IconItem extends Item<$IconItemCopyWith<IconItem>> with _$IconItem {
   IconItem._();
   factory IconItem({
     @JsonKey(name: 'id') required String id,
@@ -39,5 +43,6 @@ class IconItem with _$IconItem, Item<$IconItemCopyWith<IconItem>> {
     @JsonKey(name: 'state') required IconItemState state,
   }) = _IconItem;
 
-  factory IconItem.fromJson(Map<String, Object?> json) => _$IconItemFromJson(json);
+  factory IconItem.fromJson(Map<String, Object?> json) =>
+      _$IconItemFromJson(json);
 }

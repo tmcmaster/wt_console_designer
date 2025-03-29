@@ -12,11 +12,13 @@ class SelectItemState with _$SelectItemState {
     @JsonKey(name: 'options') required List<String> options,
     @JsonKey(name: 'value') required String value,
   }) = _SelectItemStateState;
-  factory SelectItemState.fromJson(Map<String, Object?> json) => _$SelectItemStateFromJson(json);
+  factory SelectItemState.fromJson(Map<String, Object?> json) =>
+      _$SelectItemStateFromJson(json);
 }
 
 @freezed
-class SelectItem with _$SelectItem, Item<$SelectItemCopyWith<SelectItem>> {
+class SelectItem extends Item<$SelectItemCopyWith<SelectItem>>
+    with _$SelectItem {
   SelectItem._();
 
   factory SelectItem({
@@ -26,5 +28,6 @@ class SelectItem with _$SelectItem, Item<$SelectItemCopyWith<SelectItem>> {
     @JsonKey(name: 'state') required SelectItemState state,
   }) = _SelectItem;
 
-  factory SelectItem.fromJson(Map<String, Object?> json) => _$SelectItemFromJson(json);
+  factory SelectItem.fromJson(Map<String, Object?> json) =>
+      _$SelectItemFromJson(json);
 }

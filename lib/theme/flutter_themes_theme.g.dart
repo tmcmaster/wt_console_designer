@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
 import 'flutter_themes_colors.g.dart';
-import 'flutter_themes_text_styles.g.dart';
 
 class FlutterThemesTheme {
   static const TextTheme textTheme = TextTheme(
-    headline1: FlutterThemesTextStyles.headline1,
-    headline2: FlutterThemesTextStyles.headline2,
-    headline3: FlutterThemesTextStyles.headline3,
-    headline4: FlutterThemesTextStyles.headline4,
-    headline5: FlutterThemesTextStyles.headline5,
-    headline6: FlutterThemesTextStyles.headline6,
-    subtitle1: FlutterThemesTextStyles.subtitle1,
-    subtitle2: FlutterThemesTextStyles.subtitle2,
-    bodyText1: FlutterThemesTextStyles.bodyText1,
-    bodyText2: FlutterThemesTextStyles.bodyText2,
-    button: FlutterThemesTextStyles.button,
-    caption: FlutterThemesTextStyles.caption,
-    overline: FlutterThemesTextStyles.overline,
-  );
+      // headline1: FlutterThemesTextStyles.headline1,
+      // headline2: FlutterThemesTextStyles.headline2,
+      // headline3: FlutterThemesTextStyles.headline3,
+      // headline4: FlutterThemesTextStyles.headline4,
+      // headline5: FlutterThemesTextStyles.headline5,
+      // headline6: FlutterThemesTextStyles.headline6,
+      // subtitle1: FlutterThemesTextStyles.subtitle1,
+      // subtitle2: FlutterThemesTextStyles.subtitle2,
+      // bodyText1: FlutterThemesTextStyles.bodyText1,
+      // bodyText2: FlutterThemesTextStyles.bodyText2,
+      // button: FlutterThemesTextStyles.button,
+      // caption: FlutterThemesTextStyles.caption,
+      // overline: FlutterThemesTextStyles.overline,
+      );
 
   static const ColorScheme light = ColorScheme.light(
       onPrimary: FlutterThemesColors.lightOnPrimary,

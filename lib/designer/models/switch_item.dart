@@ -11,11 +11,13 @@ class SwitchItemState with _$SwitchItemState {
   factory SwitchItemState({
     @JsonKey(name: 'enabled') required bool enabled,
   }) = _SwitchItemStateState;
-  factory SwitchItemState.fromJson(Map<String, Object?> json) => _$SwitchItemStateFromJson(json);
+  factory SwitchItemState.fromJson(Map<String, Object?> json) =>
+      _$SwitchItemStateFromJson(json);
 }
 
 @freezed
-class SwitchItem with _$SwitchItem, Item<$SwitchItemCopyWith<SwitchItem>> {
+class SwitchItem extends Item<$SwitchItemCopyWith<SwitchItem>>
+    with _$SwitchItem {
   SwitchItem._();
 
   factory SwitchItem({
@@ -25,5 +27,6 @@ class SwitchItem with _$SwitchItem, Item<$SwitchItemCopyWith<SwitchItem>> {
     @JsonKey(name: 'state') required SwitchItemState state,
   }) = _SwitchItem;
 
-  factory SwitchItem.fromJson(Map<String, Object?> json) => _$SwitchItemFromJson(json);
+  factory SwitchItem.fromJson(Map<String, Object?> json) =>
+      _$SwitchItemFromJson(json);
 }

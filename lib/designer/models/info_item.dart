@@ -11,11 +11,12 @@ class InfoItemState with _$InfoItemState {
   factory InfoItemState({
     @JsonKey(name: 'value') required String value,
   }) = _InfoItemStateState;
-  factory InfoItemState.fromJson(Map<String, Object?> json) => _$InfoItemStateFromJson(json);
+  factory InfoItemState.fromJson(Map<String, Object?> json) =>
+      _$InfoItemStateFromJson(json);
 }
 
 @freezed
-class InfoItem with _$InfoItem, Item<$InfoItemCopyWith<InfoItem>> {
+class InfoItem extends Item<$InfoItemCopyWith<InfoItem>> with _$InfoItem {
   InfoItem._();
 
   factory InfoItem({
@@ -25,5 +26,6 @@ class InfoItem with _$InfoItem, Item<$InfoItemCopyWith<InfoItem>> {
     @JsonKey(name: 'state') required InfoItemState state,
   }) = _InfoItem;
 
-  factory InfoItem.fromJson(Map<String, Object?> json) => _$InfoItemFromJson(json);
+  factory InfoItem.fromJson(Map<String, Object?> json) =>
+      _$InfoItemFromJson(json);
 }

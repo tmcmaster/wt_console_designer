@@ -13,11 +13,13 @@ class SliderItemState with _$SliderItemState {
     @JsonKey(name: 'max') required double max,
     @JsonKey(name: 'value') required double value,
   }) = _SliderItemStateState;
-  factory SliderItemState.fromJson(Map<String, Object?> json) => _$SliderItemStateFromJson(json);
+  factory SliderItemState.fromJson(Map<String, Object?> json) =>
+      _$SliderItemStateFromJson(json);
 }
 
 @freezed
-class SliderItem with _$SliderItem, Item<$SliderItemCopyWith<SliderItem>> {
+class SliderItem extends Item<$SliderItemCopyWith<SliderItem>>
+    with _$SliderItem {
   SliderItem._();
 
   factory SliderItem({
@@ -27,5 +29,6 @@ class SliderItem with _$SliderItem, Item<$SliderItemCopyWith<SliderItem>> {
     @JsonKey(name: 'state') required SliderItemState state,
   }) = _SliderItem;
 
-  factory SliderItem.fromJson(Map<String, Object?> json) => _$SliderItemFromJson(json);
+  factory SliderItem.fromJson(Map<String, Object?> json) =>
+      _$SliderItemFromJson(json);
 }

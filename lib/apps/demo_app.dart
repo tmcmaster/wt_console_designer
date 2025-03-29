@@ -1,9 +1,10 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:wt_app_scaffold/app_scaffolds.dart';
+import 'package:wt_app_scaffold/app_platform/scaffold_app_dsl.dart';
 import 'package:wt_console_designer/designer/screens/console_view.dart';
 import 'package:wt_console_designer/designer/screens/home_view.dart';
 import 'package:wt_console_designer/firebase_options.dart';
+import 'package:wt_firepod/wt_firepod.dart';
 
 void main() async {
   runMyApp(
